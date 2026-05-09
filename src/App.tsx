@@ -42,6 +42,7 @@ const BookingModal = ({ onClose, defaultExperience = "" }: BookingModalProps) =>
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const set = (field: string) => (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
@@ -52,7 +53,9 @@ const BookingModal = ({ onClose, defaultExperience = "" }: BookingModalProps) =>
     try {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form as Record<string, unknown>, EMAILJS_PUBLIC_KEY);
       setStatus("success");
-    } catch {
+    } catch (err: unknown) {
+      const e = err as { text?: string; status?: number; message?: string };
+      setErrorMsg(e?.text || e?.message || JSON.stringify(err));
       setStatus("error");
     }
   };
@@ -149,7 +152,7 @@ const BookingModal = ({ onClose, defaultExperience = "" }: BookingModalProps) =>
                 </div>
 
                 {status === "error" && (
-                  <p className="text-red-500 text-sm text-center">Something went wrong. Please try again or call us directly.</p>
+                  <p className="text-red-500 text-sm text-center">Error: {errorMsg || "Something went wrong."}</p>
                 )}
 
                 <button
@@ -241,7 +244,7 @@ const Hero = ({ onBook }: { onBook: () => void }) => (
       >
         <div className="absolute -inset-4 bg-secondary-green/30 blur-3xl rounded-full animate-pulse"></div>
         <img
-          src={`${import.meta.env.BASE_URL}images/hero-vr.png`}
+          src={`${import.meta.env.BASE_URL}images/hero-vr.jpeg`}
           alt="Student with VR"
           className="relative z-10 w-full rounded-3xl shadow-2xl border border-white/10 animate-float"
         />
