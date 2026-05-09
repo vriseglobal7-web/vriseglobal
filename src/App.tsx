@@ -80,7 +80,7 @@ const Hero = () => (
       >
         <div className="absolute -inset-4 bg-secondary-green/30 blur-3xl rounded-full animate-pulse"></div>
         <img
-          src="/images/hero-vr.png"
+          src={`${import.meta.env.BASE_URL}images/hero-vr.png`}
           alt="Student with VR"
           className="relative z-10 w-full rounded-3xl shadow-2xl border border-white/10 animate-float"
         />
@@ -131,14 +131,14 @@ const NowShowing = () => {
       title: "Big Bang Theory",
       tag: "20 MIN JOURNEY",
       desc: "An unforgettable journey through the origin of the universe to the moon landing.",
-      img: "/images/show-big-bang.jpeg",
+      img: `${import.meta.env.BASE_URL}images/show-big-bang.jpeg`,
       tagColor: "bg-secondary-green"
     },
     {
       title: "Jurassic Era & Beyond",
       tag: "POPULAR CHOICE",
       desc: "Travel back in time to witness the majestic reign of dinosaurs and the dawn of life.",
-      img: "/images/show-jurassic.jpeg",
+      img: `${import.meta.env.BASE_URL}images/show-jurassic.jpeg`,
       tagColor: "bg-red-500"
     }
   ];
@@ -218,7 +218,7 @@ const About = () => (
           <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-primary-navy/10 rounded-full blur-3xl"></div>
           <div className="bg-primary-navy p-2 rounded-[40px] shadow-2xl rotate-3">
             <img 
-              src="/images/about-student.jpeg"
+              src={`${import.meta.env.BASE_URL}images/about-student.jpeg`}
               alt="Students in VR" 
               className="w-full h-full object-cover rounded-[32px]" 
             />
