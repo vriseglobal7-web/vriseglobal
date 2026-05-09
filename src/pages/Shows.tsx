@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "motion/react";
 import emailjs from "@emailjs/browser";
 import { type ChangeEvent, type FormEvent } from "react";
@@ -386,6 +386,16 @@ const ShowCard = ({ show, onBook }: { show: Show; onBook: (exp: string) => void 
 export default function ShowsPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [defaultExperience, setDefaultExperience] = useState("");
+  const location = useLocation();
+
+  useEffect(() => {
+    const id = (location.state as { scrollTo?: string } | null)?.scrollTo;
+    if (id) {
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    }
+  }, [location.state]);
 
   const openModal = (exp = "") => {
     setDefaultExperience(exp);

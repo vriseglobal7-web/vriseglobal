@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import emailjs from "@emailjs/browser";
 import {
@@ -289,9 +289,10 @@ const Benefits = () => {
   );
 };
 
-const NowShowing = ({ onBook }: { onBook: (experience: string) => void }) => {
+const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => void; onLearnMore: (id: string) => void }) => {
   const shows = [
     {
+      id: "big-bang",
       title: "Big Bang Theory",
       tag: "20 MIN JOURNEY",
       desc: "An unforgettable journey through the origin of the universe to the moon landing.",
@@ -299,6 +300,7 @@ const NowShowing = ({ onBook }: { onBook: (experience: string) => void }) => {
       tagColor: "bg-secondary-green",
     },
     {
+      id: "jurassic",
       title: "Jurassic Era & Beyond",
       tag: "POPULAR CHOICE",
       desc: "Travel back in time to witness the majestic reign of dinosaurs and the dawn of life.",
@@ -344,7 +346,12 @@ const NowShowing = ({ onBook }: { onBook: (experience: string) => void }) => {
                   >
                     Book Now
                   </button>
-                  <button className="bg-white/10 backdrop-blur-md text-white border border-white/20 px-6 py-2 rounded-full text-sm font-bold hover:bg-white/20 transition-colors">Learn More</button>
+                  <button
+                    onClick={() => onLearnMore(show.id)}
+                    className="bg-white/10 backdrop-blur-md text-white border border-white/20 px-6 py-2 rounded-full text-sm font-bold hover:bg-white/20 transition-colors"
+                  >
+                    Learn More
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -484,10 +491,15 @@ const Footer = () => (
 export default function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [defaultExperience, setDefaultExperience] = useState("");
+  const navigate = useNavigate();
 
   const openModal = (experience = "") => {
     setDefaultExperience(experience);
     setModalOpen(true);
+  };
+
+  const goToShow = (id: string) => {
+    navigate("/shows", { state: { scrollTo: id } });
   };
 
   return (
@@ -496,7 +508,7 @@ export default function App() {
       <main>
         <Hero onBook={() => openModal()} />
         <Benefits />
-        <NowShowing onBook={openModal} />
+        <NowShowing onBook={openModal} onLearnMore={goToShow} />
         <About />
         <PricingCTA onBook={() => openModal()} />
       </main>
