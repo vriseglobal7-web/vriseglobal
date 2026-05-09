@@ -1,26 +1,187 @@
-import { motion } from "motion/react";
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  PlayCircle, 
-  ArrowRight, 
-  CheckCircle2, 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Globe, 
-  Instagram, 
-  Facebook, 
+import { useState, type ChangeEvent, type FormEvent } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import emailjs from "@emailjs/browser";
+import {
+  ChevronLeft,
+  ChevronRight,
+  PlayCircle,
+  ArrowRight,
+  CheckCircle2,
+  Phone,
+  Mail,
+  MapPin,
+  Globe,
+  Instagram,
+  Facebook,
   Twitter,
   Glasses,
   GraduationCap,
   ShieldCheck,
   LineChart,
   CreditCard,
-  BadgeCheck
+  BadgeCheck,
+  X,
+  Loader2,
 } from "lucide-react";
 
-const Navbar = () => (
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID as string;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string;
+
+type BookingModalProps = { onClose: () => void; defaultExperience?: string };
+
+const BookingModal = ({ onClose, defaultExperience = "" }: BookingModalProps) => {
+  const [form, setForm] = useState({
+    school_name: "",
+    contact_name: "",
+    phone: "",
+    email: "",
+    students: "",
+    date: "",
+    experience: defaultExperience,
+    message: "",
+  });
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+
+  const set = (field: string) => (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
+    setForm((prev) => ({ ...prev, [field]: e.target.value }));
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form as Record<string, unknown>, EMAILJS_PUBLIC_KEY);
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  const inputClass =
+    "w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-secondary-green focus:ring-2 focus:ring-secondary-green/20 transition-all";
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+        onClick={onClose}
+      >
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          transition={{ type: "spring", damping: 25, stiffness: 300 }}
+          className="relative bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="bg-primary-navy rounded-t-3xl p-8 text-white relative">
+            <button
+              onClick={onClose}
+              className="absolute top-6 right-6 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <div className="inline-flex items-center gap-2 bg-secondary-green/20 text-secondary-green border border-secondary-green/30 px-3 py-1 rounded-full text-xs font-bold mb-3">
+              <BadgeCheck className="w-3 h-3" /> BOOK A VR SESSION
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold">Book Your School's VR Experience</h2>
+            <p className="text-gray-300 text-sm mt-2">Fill in the details below and our team will contact you within 24 hours.</p>
+          </div>
+
+          {/* Body */}
+          <div className="p-8">
+            {status === "success" ? (
+              <div className="flex flex-col items-center justify-center py-12 text-center gap-4">
+                <div className="w-16 h-16 rounded-full bg-secondary-green/10 flex items-center justify-center">
+                  <CheckCircle2 className="w-8 h-8 text-secondary-green" />
+                </div>
+                <h3 className="text-xl font-bold text-primary-navy">Booking Request Sent!</h3>
+                <p className="text-gray-500 max-w-sm">Thank you! Our team will reach out to you within 24 hours to confirm your slot.</p>
+                <button onClick={onClose} className="mt-4 bg-secondary-green text-white px-8 py-3 rounded-full text-sm font-bold hover:scale-105 transition-all">
+                  Close
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">School Name *</label>
+                    <input required className={inputClass} placeholder="e.g. Delhi Public School" value={form.school_name} onChange={set("school_name")} />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Contact Person *</label>
+                    <input required className={inputClass} placeholder="Your full name" value={form.contact_name} onChange={set("contact_name")} />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Phone Number *</label>
+                    <input required type="tel" className={inputClass} placeholder="+91 98000 00000" value={form.phone} onChange={set("phone")} />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Email Address *</label>
+                    <input required type="email" className={inputClass} placeholder="school@example.com" value={form.email} onChange={set("email")} />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Number of Students *</label>
+                    <input required type="number" min="1" className={inputClass} placeholder="e.g. 120" value={form.students} onChange={set("students")} />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Preferred Date *</label>
+                    <input required type="date" className={inputClass} value={form.date} onChange={set("date")} />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Choose Experience *</label>
+                  <select required className={inputClass} value={form.experience} onChange={set("experience")}>
+                    <option value="">Select an experience</option>
+                    <option value="Big Bang Theory">Big Bang Theory — 20 Min Journey</option>
+                    <option value="Jurassic Era & Beyond">Jurassic Era &amp; Beyond — Popular Choice</option>
+                    <option value="Both">Both Experiences</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Additional Message</label>
+                  <textarea rows={3} className={inputClass} placeholder="Any specific requirements or questions..." value={form.message} onChange={set("message")} />
+                </div>
+
+                {status === "error" && (
+                  <p className="text-red-500 text-sm text-center">Something went wrong. Please try again or call us directly.</p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="w-full bg-secondary-green text-white py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-secondary-green/20 disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {status === "sending" ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" /> Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Booking Request <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
+                </button>
+
+                <p className="text-center text-xs text-gray-400">
+                  Or call us directly at{" "}
+                  <a href="tel:+919899157132" className="text-secondary-green font-bold">+91 98991 57132</a>
+                </p>
+              </form>
+            )}
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
+
+const Navbar = ({ onBook }: { onBook: () => void }) => (
   <nav className="fixed top-0 left-0 w-full z-[100] glass-nav shadow-sm">
     <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
       <div className="flex items-center gap-2">
@@ -33,18 +194,18 @@ const Navbar = () => (
         <a href="#" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">For Schools</a>
         <a href="#" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">FAQs</a>
       </div>
-      <button id="nav-book-now" className="bg-secondary-green text-white px-6 py-2 rounded-full text-sm font-bold hover:scale-105 transition-all shadow-md">
+      <button onClick={onBook} className="bg-secondary-green text-white px-6 py-2 rounded-full text-sm font-bold hover:scale-105 transition-all shadow-md">
         Book Now
       </button>
     </div>
   </nav>
 );
 
-const Hero = () => (
+const Hero = ({ onBook }: { onBook: () => void }) => (
   <section className="relative min-h-screen flex items-center pt-20 overflow-hidden hero-gradient">
     <div className="absolute inset-0 bg-gradient-to-r from-[#001851] via-[#001851]/70 to-transparent"></div>
     <div className="container mx-auto px-6 md:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
@@ -55,24 +216,24 @@ const Hero = () => (
           <span className="text-xs font-bold tracking-widest uppercase">INDIA'S FIRST-OF-ITS-KIND</span>
         </div>
         <h1 className="text-5xl md:text-7xl font-bold text-white leading-[1.1]">
-          360° VR Immersive <br/>
+          360° VR Immersive <br />
           <span className="text-secondary-green">Learning Program</span>
         </h1>
         <p className="text-lg md:text-xl text-gray-300 max-w-xl leading-relaxed">
           Learn. Experience. Remember Forever. Our program takes students on an unforgettable journey through the universe, from the Big Bang to the Moon Landing!
         </p>
         <div className="flex flex-wrap gap-4 pt-4">
-          <button id="hero-book-now" className="bg-secondary-green text-white px-8 py-4 rounded-full text-sm font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(145,218,64,0.4)] transition-all">
+          <button onClick={onBook} className="bg-secondary-green text-white px-8 py-4 rounded-full text-sm font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(145,218,64,0.4)] transition-all">
             Book Now
             <ArrowRight className="w-4 h-4" />
           </button>
-          <button id="hero-watch-trailer" className="glass-card text-white px-8 py-4 rounded-full text-sm font-bold flex items-center gap-2 hover:bg-white/10 transition-all">
+          <button className="glass-card text-white px-8 py-4 rounded-full text-sm font-bold flex items-center gap-2 hover:bg-white/10 transition-all">
             <PlayCircle className="w-4 h-4" />
             Watch Trailer
           </button>
         </div>
       </motion.div>
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1 }}
@@ -95,7 +256,7 @@ const Benefits = () => {
     { icon: <GraduationCap size={32} />, title: "Curriculum Aligned", desc: "Content specifically designed to support classroom learning objectives.", bgColor: "bg-green-500/10", iconColor: "text-green-600" },
     { icon: <ShieldCheck size={32} />, title: "Safe & Supervised", desc: "Fully managed by our team of trained VR professionals.", bgColor: "bg-cyan-500/10", iconColor: "text-cyan-600" },
     { icon: <LineChart size={32} />, title: "Concept Clarity", desc: "Improves retention and understanding of complex subjects.", bgColor: "bg-red-500/10", iconColor: "text-red-500" },
-    { icon: <CreditCard size={32} />, title: "No Investment", desc: "We bring everything to you. No hardware costs for the school.", bgColor: "bg-purple-500/10", iconColor: "text-purple-600" }
+    { icon: <CreditCard size={32} />, title: "No Investment", desc: "We bring everything to you. No hardware costs for the school.", bgColor: "bg-purple-500/10", iconColor: "text-purple-600" },
   ];
 
   return (
@@ -107,7 +268,7 @@ const Benefits = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {benefits.map((benefit, i) => (
-            <motion.div 
+            <motion.div
               key={i}
               whileHover={{ y: -10 }}
               className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center group hover:border-secondary-green transition-all"
@@ -125,22 +286,22 @@ const Benefits = () => {
   );
 };
 
-const NowShowing = () => {
+const NowShowing = ({ onBook }: { onBook: (experience: string) => void }) => {
   const shows = [
     {
       title: "Big Bang Theory",
       tag: "20 MIN JOURNEY",
       desc: "An unforgettable journey through the origin of the universe to the moon landing.",
       img: `${import.meta.env.BASE_URL}images/show-big-bang.jpeg`,
-      tagColor: "bg-secondary-green"
+      tagColor: "bg-secondary-green",
     },
     {
       title: "Jurassic Era & Beyond",
       tag: "POPULAR CHOICE",
       desc: "Travel back in time to witness the majestic reign of dinosaurs and the dawn of life.",
       img: `${import.meta.env.BASE_URL}images/show-jurassic.jpeg`,
-      tagColor: "bg-red-500"
-    }
+      tagColor: "bg-red-500",
+    },
   ];
 
   return (
@@ -162,7 +323,7 @@ const NowShowing = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {shows.map((show, i) => (
-            <motion.div 
+            <motion.div
               key={i}
               whileHover={{ scale: 1.02 }}
               className="group relative rounded-3xl overflow-hidden aspect-video shadow-2xl"
@@ -174,7 +335,12 @@ const NowShowing = () => {
                 <h3 className="text-3xl font-bold text-white">{show.title}</h3>
                 <p className="text-gray-300 max-w-md">{show.desc}</p>
                 <div className="flex gap-4 pt-2">
-                  <button className="bg-white text-primary-navy px-6 py-2 rounded-full text-sm font-bold hover:bg-secondary-green hover:text-white transition-colors">Book Now</button>
+                  <button
+                    onClick={() => onBook(show.title)}
+                    className="bg-white text-primary-navy px-6 py-2 rounded-full text-sm font-bold hover:bg-secondary-green hover:text-white transition-colors"
+                  >
+                    Book Now
+                  </button>
                   <button className="bg-white/10 backdrop-blur-md text-white border border-white/20 px-6 py-2 rounded-full text-sm font-bold hover:bg-white/20 transition-colors">Learn More</button>
                 </div>
               </div>
@@ -217,10 +383,10 @@ const About = () => (
           <div className="absolute -top-12 -left-12 w-48 h-48 bg-secondary-green/10 rounded-full blur-3xl"></div>
           <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-primary-navy/10 rounded-full blur-3xl"></div>
           <div className="bg-primary-navy p-2 rounded-[40px] shadow-2xl rotate-3">
-            <img 
+            <img
               src={`${import.meta.env.BASE_URL}images/about-student.jpeg`}
-              alt="Students in VR" 
-              className="w-full h-full object-cover rounded-[32px]" 
+              alt="Students in VR"
+              className="w-full h-full object-cover rounded-[32px]"
             />
           </div>
         </div>
@@ -229,10 +395,10 @@ const About = () => (
   </section>
 );
 
-const PricingCTA = () => (
+const PricingCTA = ({ onBook }: { onBook: () => void }) => (
   <section className="py-24 bg-gradient-to-br from-[#001851] to-[#002b7f] relative overflow-hidden">
     <div className="absolute inset-0 opacity-10">
-      <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
+      <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "40px 40px" }}></div>
     </div>
     <div className="container mx-auto px-6 md:px-12 relative z-10">
       <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[40px] p-8 md:p-20 text-center text-white">
@@ -259,7 +425,10 @@ const PricingCTA = () => (
             </div>
           </div>
         </div>
-        <button id="cta-enquire-now" className="bg-secondary-green text-white px-12 py-5 rounded-full text-sm font-bold hover:scale-105 active:scale-95 transition-all shadow-[0_0_30px_rgba(145,218,64,0.3)]">
+        <button
+          onClick={onBook}
+          className="bg-secondary-green text-white px-12 py-5 rounded-full text-sm font-bold hover:scale-105 active:scale-95 transition-all shadow-[0_0_30px_rgba(145,218,64,0.3)]"
+        >
           ENQUIRE NOW FOR BOOKING
         </button>
       </div>
@@ -317,18 +486,26 @@ const Footer = () => (
 );
 
 export default function App() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [defaultExperience, setDefaultExperience] = useState("");
+
+  const openModal = (experience = "") => {
+    setDefaultExperience(experience);
+    setModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
+      <Navbar onBook={() => openModal()} />
       <main>
-        <Hero />
+        <Hero onBook={() => openModal()} />
         <Benefits />
-        <NowShowing />
+        <NowShowing onBook={openModal} />
         <About />
-        <PricingCTA />
+        <PricingCTA onBook={() => openModal()} />
       </main>
       <Footer />
+      {modalOpen && <BookingModal onClose={() => setModalOpen(false)} defaultExperience={defaultExperience} />}
     </div>
   );
 }
-
