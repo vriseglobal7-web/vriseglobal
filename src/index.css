@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Lexend:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Lexend", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Montserrat", sans-serif;
+
+  --color-primary-navy: #001851;
+  --color-secondary-green: #91da40;
+  --color-tertiary-cyan: #00a4eb;
+  
+  --breakpoint-xs: 375px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+@layer base {
+  body {
+    @apply bg-[#fbf8ff] text-[#1b1b22] font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+.glass-nav {
+  background: rgba(251, 248, 255, 0.8);
+  backdrop-filter: blur(12px);
+}
+
+.hero-gradient {
+  background: linear-gradient(rgba(0, 24, 81, 0.7), rgba(0, 24, 81, 0.9)), url('https://lh3.googleusercontent.com/aida/ADBb0uh4hLPByOQOwrKcA7aw4ofbZn0GjO_WlDaGu5Om75Wee5CqelRV-6en6ULwIYZ-22cNM8F7spFQklCQc64yKQ2AlqYvsNeEVWznYc8m94bMXGU7HCCglNveUE-eg_VBMv7RFh2080rLnq3EinaufIgwTUOWSjTTfe7VxB3xeplnXyOupvPomQ5Sly0HPQGD7nXN4PrlXBmjiZ7piDT_KQql9wYINmVSeUNe9JD2911IISgm_d3ATusnWq6vSuUvWwUYPCxHBuWYXg');
+  background-size: cover;
+  background-position: center;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
