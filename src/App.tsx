@@ -467,15 +467,9 @@ const Footer = () => (
           <h4 className="text-lg font-bold mb-6">Contact Detail</h4>
           <ul className="space-y-4 text-gray-400">
             <li className="flex items-center gap-3"><Phone className="text-secondary-green w-5 h-5" /> +91 98991 57132</li>
-            <li className="flex items-center gap-3"><Mail className="text-secondary-green w-5 h-5" /> info@vriseglobal.com</li>
+            <li className="flex items-center gap-3"><Mail className="text-secondary-green w-5 h-5" /> vriseglobal7@gmail.com</li>
             <li className="flex items-center gap-3"><MapPin className="text-secondary-green w-5 h-5" /> Gurugram, Haryana, India</li>
           </ul>
-        </div>
-        <div>
-          <h4 className="text-lg font-bold mb-6">Office Location</h4>
-          <div className="rounded-2xl overflow-hidden h-40 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkArCiEPsPO45t3sM7IE83uLHGtXuzVYosaP3KPmO_Hgb3o4CJKuMzDVm92zDsz0517Uv65riJ_WSS4-43bnjHws3joEWg1a396qJEzUBlMW4TgSdDGWzaqD9dfZMQblXc5PKC9JdVQwLGVRTmmdJ4jZS7mQtZr55IbGG1nfrH7wmAeVzrifFe1Xa8MHDjurhzjcSZ0s3tcYACDRLQy4lreWJimJKF-stZ7a2NkpDWVWVMyWMfBTtgky1k9yCk4F5y1gNct4BQehs" alt="Map" className="w-full h-full object-cover" />
-          </div>
         </div>
       </div>
       <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-sm">
