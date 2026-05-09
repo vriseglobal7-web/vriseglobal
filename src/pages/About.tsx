@@ -146,8 +146,6 @@ const Navbar = ({ onBook }: { onBook: () => void }) => (
       <div className="hidden md:flex items-center gap-8">
         <Link to="/" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">Home</Link>
         <Link to="/about" className="text-secondary-green font-bold border-b-2 border-secondary-green text-sm">About Us</Link>
-        <a href="#" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">Experiences</a>
-        <a href="#" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">For Schools</a>
         <Link to="/faq" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">FAQs</Link>
       </div>
       <button onClick={onBook} className="bg-secondary-green text-white px-6 py-2 rounded-full text-sm font-bold hover:scale-105 transition-all shadow-md">
