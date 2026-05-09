@@ -142,7 +142,7 @@ const BookingModal = ({ onClose }: BookingModalProps) => {
 const Navbar = ({ onBook }: { onBook: () => void }) => (
   <nav className="fixed top-0 left-0 w-full z-[100] glass-nav shadow-sm">
     <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
-      <Link to="/" className="text-2xl font-bold font-display text-primary-navy">VRISE Global</Link>
+      <Link to="/"><img src={`${import.meta.env.BASE_URL}images/vriselogo.svg`} alt="VRISE Global" className="h-10 w-auto" /></Link>
       <div className="hidden md:flex items-center gap-8">
         <Link to="/" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">Home</Link>
         <Link to="/about" className="text-secondary-green font-bold border-b-2 border-secondary-green text-sm">About Us</Link>
@@ -275,7 +275,7 @@ export default function AboutPage() {
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
               <div className="absolute -top-8 -right-8 w-64 h-64 bg-secondary-green/10 rounded-full blur-3xl" />
               <div className="bg-primary-navy p-2 rounded-[40px] shadow-2xl -rotate-2">
-                <img src={`${import.meta.env.BASE_URL}images/show-big-bang.jpeg`} alt="VRISE VR Experience" className="w-full rounded-[32px] object-cover" />
+                <img src={`${import.meta.env.BASE_URL}images/vrisefounder.jpeg`} alt="VRISE Global Founder" className="w-3/4 mx-auto rounded-[32px] object-contain" />
               </div>
             </motion.div>
           </div>

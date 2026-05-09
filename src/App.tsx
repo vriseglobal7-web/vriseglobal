@@ -189,7 +189,7 @@ const Navbar = ({ onBook }: { onBook: () => void }) => (
   <nav className="fixed top-0 left-0 w-full z-[100] glass-nav shadow-sm">
     <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
       <div className="flex items-center gap-2">
-        <div className="text-2xl font-bold font-display text-primary-navy">VRISE Global</div>
+        <img src={`${import.meta.env.BASE_URL}images/vriselogo.svg`} alt="VRISE Global" className="h-10 w-auto" />
       </div>
       <div className="hidden md:flex items-center gap-8">
         <Link to="/" className="text-secondary-green font-bold border-b-2 border-secondary-green text-sm">Home</Link>
