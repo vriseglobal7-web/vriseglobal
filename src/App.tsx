@@ -1,4 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import emailjs from "@emailjs/browser";
 import {
@@ -191,8 +192,8 @@ const Navbar = ({ onBook }: { onBook: () => void }) => (
         <div className="text-2xl font-bold font-display text-primary-navy">VRISE Global</div>
       </div>
       <div className="hidden md:flex items-center gap-8">
-        <a href="#" className="text-secondary-green font-bold border-b-2 border-secondary-green text-sm">Home</a>
-        <a href="#" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">About Us</a>
+        <Link to="/" className="text-secondary-green font-bold border-b-2 border-secondary-green text-sm">Home</Link>
+        <Link to="/about" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">About Us</Link>
         <a href="#" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">Experiences</a>
         <a href="#" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">For Schools</a>
         <a href="#" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">FAQs</a>
