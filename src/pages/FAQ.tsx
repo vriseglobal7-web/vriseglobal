@@ -1,6 +1,7 @@
 import { useState } from "react";
+import type React from "react";
 import { Link } from "react-router-dom";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowRight,
   CheckCircle2,
@@ -12,12 +13,13 @@ import {
   Facebook,
   Twitter,
   BadgeCheck,
-  Target,
-  Eye,
-  Heart,
-  Users,
+  ChevronDown,
   Loader2,
   X,
+  CalendarDays,
+  ShieldCheck,
+  BookOpen,
+  Sparkles,
 } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { type ChangeEvent, type FormEvent } from "react";
@@ -46,7 +48,7 @@ const BookingModal = ({ onClose }: BookingModalProps) => {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form as Record<string, unknown>, EMAILJS_PUBLIC_KEY);
       setStatus("success");
     } catch (err: unknown) {
-      const e = err as { text?: string; status?: number; message?: string };
+      const e = err as { text?: string; message?: string };
       setErrorMsg(e?.text || e?.message || JSON.stringify(err));
       setStatus("error");
     }
@@ -145,10 +147,10 @@ const Navbar = ({ onBook }: { onBook: () => void }) => (
       <Link to="/" className="text-2xl font-bold font-display text-primary-navy">VRISE Global</Link>
       <div className="hidden md:flex items-center gap-8">
         <Link to="/" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">Home</Link>
-        <Link to="/about" className="text-secondary-green font-bold border-b-2 border-secondary-green text-sm">About Us</Link>
+        <Link to="/about" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">About Us</Link>
         <a href="#" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">Experiences</a>
         <a href="#" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">For Schools</a>
-        <Link to="/faq" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">FAQs</Link>
+        <Link to="/faq" className="text-secondary-green font-bold border-b-2 border-secondary-green text-sm">FAQs</Link>
       </div>
       <button onClick={onBook} className="bg-secondary-green text-white px-6 py-2 rounded-full text-sm font-bold hover:scale-105 transition-all shadow-md">
         Book Now
@@ -160,7 +162,7 @@ const Navbar = ({ onBook }: { onBook: () => void }) => (
 const Footer = () => (
   <footer className="bg-[#001851] text-white pt-24 pb-12 border-t border-white/10">
     <div className="max-w-7xl mx-auto px-6 md:px-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-16">
         <div className="space-y-6">
           <div className="text-3xl font-bold font-display">VRISE Global</div>
           <p className="text-gray-400 leading-relaxed">Experience Beyond Reality. India's premier VR education partner for modern schools.</p>
@@ -175,6 +177,7 @@ const Footer = () => (
           <ul className="space-y-4 text-gray-400">
             <li><Link to="/" className="hover:text-secondary-green hover:underline transition-all">Home</Link></li>
             <li><Link to="/about" className="hover:text-secondary-green hover:underline transition-all">About Us</Link></li>
+            <li><Link to="/faq" className="hover:text-secondary-green hover:underline transition-all">FAQs</Link></li>
             <li><a href="#" className="hover:text-secondary-green hover:underline transition-all">Privacy Policy</a></li>
             <li><a href="#" className="hover:text-secondary-green hover:underline transition-all">Terms of Service</a></li>
           </ul>
@@ -196,38 +199,148 @@ const Footer = () => (
   </footer>
 );
 
-export default function AboutPage() {
+type FAQItem = { q: string; a: string };
+type FAQCategory = { icon: React.ReactNode; title: string; color: string; items: FAQItem[] };
+
+const faqCategories: FAQCategory[] = [
+  {
+    icon: <CalendarDays className="w-6 h-6" />,
+    title: "Booking & Logistics",
+    color: "bg-secondary-green/10 text-secondary-green",
+    items: [
+      {
+        q: "How do we book a VR session for our school?",
+        a: "Simply click the 'Book Now' button on our website and fill in your school details. Our team will get in touch within 24 hours to confirm the date, time, and session plan.",
+      },
+      {
+        q: "How far in advance should we book?",
+        a: "We recommend booking at least 7–10 days in advance to secure your preferred date. However, we do our best to accommodate last-minute requests — just give us a call directly.",
+      },
+      {
+        q: "How many students can participate in one session?",
+        a: "We can comfortably accommodate batches of 30–40 students per slot. For larger schools, we run multiple back-to-back batches throughout the day so every student gets the full experience.",
+      },
+      {
+        q: "Is there a minimum number of students required?",
+        a: "Yes, we require a minimum of 50 students per booking to make the session viable. For smaller groups, feel free to contact us and we'll find a suitable arrangement.",
+      },
+      {
+        q: "Do you come to our school or do we need to travel?",
+        a: "We come to you! Our team arrives at your school with all equipment fully set up and ready. There's no travel required for students or staff.",
+      },
+    ],
+  },
+  {
+    icon: <ShieldCheck className="w-6 h-6" />,
+    title: "Safety & Equipment",
+    color: "bg-blue-500/10 text-blue-600",
+    items: [
+      {
+        q: "Is VR safe for children's eyes?",
+        a: "Yes. We use premium VR headsets designed for educational use and follow strict usage guidelines — sessions are capped at 20 minutes per student, which is well within the safe range recommended by health experts.",
+      },
+      {
+        q: "What age group is this suitable for?",
+        a: "Our VR experiences are designed for students from Class 4 onwards (ages 9+). The content, narration, and experience duration are all calibrated for school-age children.",
+      },
+      {
+        q: "Are the VR headsets sanitized between students?",
+        a: "Absolutely. Our team sanitizes every headset between each use using medical-grade disinfectant wipes. Hygiene is a top priority and we follow a strict cleaning protocol throughout the session.",
+      },
+      {
+        q: "What if a child feels dizzy or uncomfortable?",
+        a: "Our trained facilitators closely monitor every student during the session. If any student feels dizzy or uneasy, we immediately remove the headset and let them rest. The experience is always voluntary — no student is pressured to continue.",
+      },
+      {
+        q: "Do we need to provide any equipment or special space?",
+        a: "No investment or special setup is required from the school. We bring everything — headsets, audio equipment, seating arrangement guides, and our own team. All we need is a classroom or open hall space.",
+      },
+    ],
+  },
+  {
+    icon: <BookOpen className="w-6 h-6" />,
+    title: "Content & Curriculum",
+    color: "bg-purple-500/10 text-purple-600",
+    items: [
+      {
+        q: "Which VR experiences are currently available?",
+        a: "We currently offer two flagship experiences: 'Big Bang Theory' — a 20-minute journey from the origin of the universe to the Moon Landing, and 'Jurassic Era & Beyond' — an immersive exploration of prehistoric life on Earth.",
+      },
+      {
+        q: "Is the content aligned with CBSE/ICSE syllabus?",
+        a: "Yes. Every VR experience we offer is mapped to the CBSE and ICSE science curriculum. Students experience concepts they're already studying — making the learning immediately relevant and reinforcing classroom lessons.",
+      },
+      {
+        q: "How long does each VR show last?",
+        a: "Each VR show runs for approximately 20 minutes per student batch. If you book both experiences, each batch gets two back-to-back 20-minute shows. Setup and wrap-up time is additional.",
+      },
+      {
+        q: "Can we request specific topics or subjects?",
+        a: "We're continuously developing new VR content across subjects including geography, history, and biology. Reach out to us with your topic requirements — we'd love to know what your students need and factor it into our upcoming releases.",
+      },
+    ],
+  },
+  {
+    icon: <Sparkles className="w-6 h-6" />,
+    title: "On the Day",
+    color: "bg-orange-500/10 text-orange-500",
+    items: [
+      {
+        q: "How long does setup and pack-up take?",
+        a: "Our team typically arrives 30–45 minutes before the session to set up. Pack-up after the last batch takes around 20–30 minutes. The school doesn't need to do anything — we handle it entirely.",
+      },
+      {
+        q: "Do you need WiFi or electricity from the school?",
+        a: "We just need access to standard electrical points (we carry our own power extension if needed). WiFi is not required — all VR content is pre-loaded on our devices so sessions run seamlessly offline.",
+      },
+      {
+        q: "How many staff do you bring?",
+        a: "We bring a minimum of 2 trained VR facilitators per session, with additional staff for larger schools. Our team manages the entire experience independently so teachers are free to observe or take a break.",
+      },
+      {
+        q: "What do teachers need to do during the session?",
+        a: "Very little! Teachers are welcome to observe the session or use the time as they see fit. We do recommend a brief 5-minute pre-show talk by the class teacher to build excitement — but it's entirely optional.",
+      },
+    ],
+  },
+];
+
+const FAQAccordion = ({ items }: { items: FAQItem[] }) => {
+  const [open, setOpen] = useState<number | null>(null);
+  return (
+    <div className="space-y-3">
+      {items.map((item, i) => (
+        <div key={i} className="border border-gray-100 rounded-2xl overflow-hidden bg-white">
+          <button
+            onClick={() => setOpen(open === i ? null : i)}
+            className="w-full flex justify-between items-center px-6 py-5 text-left hover:bg-gray-50 transition-colors"
+          >
+            <span className="font-semibold text-primary-navy text-sm md:text-base pr-4">{item.q}</span>
+            <ChevronDown className={`w-5 h-5 text-secondary-green shrink-0 transition-transform duration-300 ${open === i ? "rotate-180" : ""}`} />
+          </button>
+          <AnimatePresence>
+            {open === i && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+              >
+                <p className="px-6 pb-5 text-gray-500 text-sm leading-relaxed border-t border-gray-100 pt-4">{item.a}</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default function FAQPage() {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const values = [
-    {
-      icon: <Target className="w-6 h-6" />,
-      title: "Our Mission",
-      desc: "To make world-class experiential learning accessible to every student in India through the power of 360° Virtual Reality — regardless of geography or school resources.",
-      color: "bg-secondary-green/10 text-secondary-green",
-    },
-    {
-      icon: <Eye className="w-6 h-6" />,
-      title: "Our Vision",
-      desc: "A future where every child in India has experienced the universe, walked with dinosaurs, and explored history — all from their classroom, igniting a lifelong love for learning.",
-      color: "bg-blue-500/10 text-blue-600",
-    },
-    {
-      icon: <Heart className="w-6 h-6" />,
-      title: "Our Values",
-      desc: "Innovation in education, accessibility for all, student safety, curriculum alignment, and a relentless commitment to making learning an unforgettable experience.",
-      color: "bg-purple-500/10 text-purple-600",
-    },
-  ];
-
-  const team = [
-    { name: "Founding Team", role: "Visionaries in EdTech & VR", desc: "With backgrounds spanning education technology, virtual reality production, and school administration, our founders saw a gap between how students learn and how they could learn." },
-    { name: "VR Experience Team", role: "Content & Immersion Specialists", desc: "Our content team crafts scientifically accurate, curriculum-aligned VR journeys that align with CBSE and ICSE syllabi — ensuring students experience exactly what they need to know." },
-    { name: "On-Ground Team", role: "Trained VR Facilitators", desc: "Every session is managed by our certified VR professionals who handle equipment setup, safety protocols, and student engagement — so teachers can simply enjoy the show." },
-  ];
-
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#fbf8ff]">
       <Navbar onBook={() => setModalOpen(true)} />
 
       {/* Hero */}
@@ -238,140 +351,49 @@ export default function AboutPage() {
         <div className="container mx-auto px-6 md:px-12 relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <div className="inline-flex items-center gap-2 bg-secondary-green/20 text-secondary-green border border-secondary-green/30 px-4 py-2 rounded-full text-xs font-bold mb-6">
-              <BadgeCheck className="w-4 h-4" /> INDIA'S VR EDUCATION PIONEER
+              <BadgeCheck className="w-4 h-4" /> EVERYTHING YOU NEED TO KNOW
             </div>
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-              About <span className="text-secondary-green">VRISE Global</span>
+              Frequently Asked <span className="text-secondary-green">Questions</span>
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              We started with one belief: students learn best when they experience, not just read. Today, that belief has transformed learning for over 50,000 students across India.
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+              Got questions before booking? We've answered everything schools commonly ask right here.
             </p>
           </motion.div>
         </div>
       </section>
 
-
-      {/* Our Story */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-8">Our Story</h2>
-              <div className="space-y-5 text-gray-600 text-lg leading-relaxed">
-                <p>
-                  VRISE Global was born from a simple, powerful observation: classrooms across India were filled with curious minds being taught about the Big Bang, dinosaurs, and ancient civilizations — but only through textbooks and static images.
-                </p>
-                <p>
-                  We knew there had to be a better way. So we built it.
-                </p>
-                <p>
-                  We developed India's first school-focused, fully-managed VR learning program — bringing high-fidelity, curriculum-aligned 360° experiences directly to schools. No capital investment required from schools. No complicated setup. Just pure, unforgettable immersive learning.
-                </p>
-                <p>
-                  Today, VRISE Global is trusted by 300+ schools across multiple states, having transformed how over 50,000 students experience education. And we're just getting started.
-                </p>
-              </div>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
-              <div className="absolute -top-8 -right-8 w-64 h-64 bg-secondary-green/10 rounded-full blur-3xl" />
-              <div className="bg-primary-navy p-2 rounded-[40px] shadow-2xl -rotate-2">
-                <img src={`${import.meta.env.BASE_URL}images/show-big-bang.jpeg`} alt="VRISE VR Experience" className="w-full rounded-[32px] object-cover" />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Mission, Vision, Values */}
-      <section className="py-24 bg-[#fbf8ff]">
-        <div className="container mx-auto px-6 md:px-12">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-4">What Drives Us</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">Every VR session we deliver is guided by a clear purpose — to make learning transformative, accessible, and memorable.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {values.map((v, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.15 }} viewport={{ once: true }} className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:border-secondary-green transition-all">
-                <div className={`w-14 h-14 rounded-2xl ${v.color} flex items-center justify-center mb-6`}>{v.icon}</div>
-                <h3 className="text-xl font-bold text-primary-navy mb-4">{v.title}</h3>
-                <p className="text-gray-500 leading-relaxed">{v.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* What We Do */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative order-2 lg:order-1">
-              <div className="absolute -bottom-8 -left-8 w-64 h-64 bg-primary-navy/5 rounded-full blur-3xl" />
-              <div className="bg-secondary-green p-2 rounded-[40px] shadow-2xl rotate-2">
-                <img src={`${import.meta.env.BASE_URL}images/about-student.jpeg`} alt="Students experiencing VR" className="w-full rounded-[32px] object-cover" />
-              </div>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="order-1 lg:order-2">
-              <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-8">How It Works</h2>
-              <div className="space-y-6">
-                {[
-                  { step: "01", title: "Book a Session", desc: "Fill out our simple booking form. Our team contacts you within 24 hours to confirm the date, time, and number of students." },
-                  { step: "02", title: "We Come to You", desc: "Our trained VR facilitators arrive at your school with all equipment — VR headsets, audio systems, and everything needed for a seamless experience." },
-                  { step: "03", title: "Students Experience & Learn", desc: "Students put on headsets and are transported to another world — the Big Bang, the Jurassic Era, space exploration — in full 360° immersive VR." },
-                  { step: "04", title: "Zero Hassle, Full Impact", desc: "We pack up and leave. Your students carry forward a memory — and an understanding — that no textbook could have given them." },
-                ].map((item, i) => (
-                  <div key={i} className="flex gap-5">
-                    <div className="w-12 h-12 rounded-full bg-secondary-green/10 text-secondary-green font-bold text-sm flex items-center justify-center shrink-0">{item.step}</div>
-                    <div>
-                      <h4 className="font-bold text-primary-navy mb-1">{item.title}</h4>
-                      <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
-                    </div>
+      {/* FAQ Sections */}
+      <section className="py-24">
+        <div className="container mx-auto px-6 md:px-12 max-w-4xl">
+          <div className="space-y-16">
+            {faqCategories.map((category, ci) => (
+              <motion.div key={ci} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+                <div className="flex items-center gap-4 mb-8">
+                  <div className={`w-12 h-12 rounded-2xl ${category.color} flex items-center justify-center`}>
+                    {category.icon}
                   </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team */}
-      <section className="py-24 bg-primary-navy text-white">
-        <div className="container mx-auto px-6 md:px-12">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">The People Behind VRISE</h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">A passionate team of educators, technologists, and storytellers united by one goal — making learning unforgettable.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {team.map((member, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.15 }} viewport={{ once: true }} className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 hover:border-secondary-green/50 transition-all">
-                <div className="w-14 h-14 rounded-full bg-secondary-green/20 flex items-center justify-center mb-6">
-                  <Users className="w-6 h-6 text-secondary-green" />
+                  <h2 className="text-2xl font-bold text-primary-navy">{category.title}</h2>
                 </div>
-                <h3 className="text-xl font-bold mb-1">{member.name}</h3>
-                <p className="text-secondary-green text-sm font-medium mb-4">{member.role}</p>
-                <p className="text-gray-400 text-sm leading-relaxed">{member.desc}</p>
+                <FAQAccordion items={category.items} />
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 bg-gradient-to-br from-[#001851] to-[#002b7f] relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "40px 40px" }} />
-        </div>
-        <div className="container mx-auto px-6 md:px-12 relative z-10 text-center text-white">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Bring VR to Your School?</h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-10">Join 300+ schools that have already transformed learning for their students. Booking is simple, and there's no investment required from your school.</p>
+      {/* Still have questions CTA */}
+      <section className="py-20 bg-primary-navy">
+        <div className="container mx-auto px-6 md:px-12 text-center text-white">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Still Have Questions?</h2>
+          <p className="text-gray-300 max-w-xl mx-auto mb-10">Our team is happy to walk you through everything before you commit to a booking. Just reach out.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <button onClick={() => setModalOpen(true)} className="bg-secondary-green text-white px-10 py-4 rounded-full font-bold text-sm flex items-center gap-2 hover:scale-105 transition-all shadow-[0_0_30px_rgba(145,218,64,0.3)]">
+            <button onClick={() => setModalOpen(true)} className="bg-secondary-green text-white px-10 py-4 rounded-full font-bold text-sm flex items-center gap-2 hover:scale-105 transition-all">
               Book a Session <ArrowRight className="w-4 h-4" />
             </button>
-            <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 px-8 py-4 rounded-full">
-              <CheckCircle2 className="w-5 h-5 text-secondary-green" />
-              <span className="text-sm font-medium">Starts at ₹600 per student</span>
-            </div>
+            <a href="tel:+919899157132" className="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 px-8 py-4 rounded-full text-sm font-medium hover:bg-white/20 transition-all">
+              <Phone className="w-4 h-4 text-secondary-green" /> +91 98991 57132
+            </a>
           </div>
         </div>
       </section>

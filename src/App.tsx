@@ -196,7 +196,7 @@ const Navbar = ({ onBook }: { onBook: () => void }) => (
         <Link to="/about" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">About Us</Link>
         <a href="#" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">Experiences</a>
         <a href="#" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">For Schools</a>
-        <a href="#" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">FAQs</a>
+        <Link to="/faq" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">FAQs</Link>
       </div>
       <button onClick={onBook} className="bg-secondary-green text-white px-6 py-2 rounded-full text-sm font-bold hover:scale-105 transition-all shadow-md">
         Book Now
