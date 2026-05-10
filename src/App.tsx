@@ -316,7 +316,7 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
           <div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Now Showing</h2>
-            <p className="text-lg text-gray-400 max-w-xl">Embark on extraordinary adventures that transcend time and space. Book your school's slot for these award-winning experiences.</p>
+            <p className="text-lg text-gray-400 max-w-xl">We have multiple titles and vision for setting up labs in schools to provide a smooth learning experience, Book your school's slot for these award-winning experiences.</p>
           </div>
           <div className="flex gap-4">
             <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-all">
