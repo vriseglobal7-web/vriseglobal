@@ -5,7 +5,6 @@ import emailjs from "@emailjs/browser";
 import {
   ChevronLeft,
   ChevronRight,
-  PlayCircle,
   ArrowRight,
   CheckCircle2,
   Phone,
@@ -218,7 +217,7 @@ const Hero = ({ onBook }: { onBook: () => void }) => (
           <BadgeCheck className="w-4 h-4" />
           <span className="text-xs font-bold tracking-widest uppercase">INDIA'S FIRST-OF-ITS-KIND</span>
         </div>
-        <h1 className="text-5xl md:text-7xl font-bold text-white leading-[1.1]">
+        <h1 className="text-4xl md:text-5xl font-bold text-white leading-[1.1]">
           360° VR Immersive <br />
           <span className="text-secondary-green">Learning Program</span>
         </h1>
@@ -230,10 +229,6 @@ const Hero = ({ onBook }: { onBook: () => void }) => (
           <button onClick={onBook} className="bg-secondary-green text-white px-8 py-4 rounded-full text-sm font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(145,218,64,0.4)] transition-all">
             Book Now
             <ArrowRight className="w-4 h-4" />
-          </button>
-          <button className="glass-card text-white px-8 py-4 rounded-full text-sm font-bold flex items-center gap-2 hover:bg-white/10 transition-all">
-            <PlayCircle className="w-4 h-4" />
-            Watch Trailer
           </button>
         </div>
       </motion.div>
