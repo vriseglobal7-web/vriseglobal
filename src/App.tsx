@@ -221,7 +221,9 @@ const Hero = ({ onBook }: { onBook: () => void }) => (
           360° VR Immersive <br />
           <span className="text-secondary-green">Learning Program</span>
         </h1>
-        <p className="text-2xl md:text-3xl font-bold text-secondary-green tracking-wide">See. Feel. Learn.</p>
+        <p className="text-3xl md:text-4xl italic font-light text-secondary-green tracking-widest" style={{ fontFamily: "'Lexend', sans-serif", textShadow: "0 0 30px rgba(145,218,64,0.4)" }}>
+          " See. Feel. Learn. "
+        </p>
         <p className="text-lg md:text-xl text-gray-300 max-w-xl leading-relaxed">
           Learn. Experience. Remember Forever. Our program takes students on an unforgettable journey through the universe, from the Big Bang to the Moon Landing!
         </p>
@@ -384,13 +386,13 @@ const About = () => (
           </div>
         </div>
       </div>
-      <div className="order-1 lg:order-2">
-        <div className="relative">
+      <div className="order-1 lg:order-2 flex justify-center">
+        <div className="relative w-4/5">
           <div className="absolute -top-12 -left-12 w-48 h-48 bg-secondary-green/10 rounded-full blur-3xl"></div>
           <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-primary-navy/10 rounded-full blur-3xl"></div>
           <div className="bg-primary-navy p-2 rounded-[40px] shadow-2xl rotate-3">
             <img
-              src={`${import.meta.env.BASE_URL}images/about-student.jpeg`}
+              src={`${import.meta.env.BASE_URL}images/about-student.avif`}
               alt="Students in VR"
               className="w-full h-full object-cover rounded-[32px]"
             />
@@ -401,39 +403,66 @@ const About = () => (
   </section>
 );
 
+const experiences = [
+  { img: "premium_photo-1663091224337-38e68aad44ce.avif.avif", label: "VR Headset Experience", tag: "Immersive", span: "col-span-2 row-span-2" },
+  { img: "premium_photo-1663054493138-0a90944f1366.avif", label: "Classroom Discovery", tag: "Interactive", span: "" },
+  { img: "premium_photo-1663091490635-3f757659ce10.avif", label: "Group Learning Session", tag: "Collaborative", span: "" },
+  { img: "premium_photo-1665203583049-4c23499c3769.avif", label: "Virtual Field Trip", tag: "Exploratory", span: "" },
+  { img: "premium_photo-1682124393358-92254bdf2065.avif", label: "360° Science Journey", tag: "Curriculum-Linked", span: "" },
+];
+
 const PricingCTA = ({ onBook }: { onBook: () => void }) => (
-  <section className="py-24 bg-gradient-to-br from-[#001851] to-[#002b7f] relative overflow-hidden">
-    <div className="absolute inset-0 opacity-10">
-      <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "40px 40px" }}></div>
-    </div>
-    <div className="container mx-auto px-6 md:px-12 relative z-10">
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[40px] p-8 md:p-20 text-center text-white">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4">Ready to Transform Your School?</h2>
-        <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-12">Program fees start as low as ₹600 per student. Ask about our special discounts for larger groups!</p>
-        <div className="flex flex-col md:flex-row justify-center items-center gap-12 mb-12">
-          <div className="flex items-center gap-4 text-left">
-            <div className="w-12 h-12 rounded-full bg-secondary-green text-white flex items-center justify-center">
-              <CreditCard className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="text-secondary-green font-bold text-2xl">₹600/-</div>
-              <div className="text-gray-400 text-xs uppercase tracking-widest">Per Student</div>
-            </div>
-          </div>
-          <div className="w-px h-12 bg-white/20 hidden md:block"></div>
-          <div className="flex items-center gap-4 text-left">
-            <div className="w-12 h-12 rounded-full bg-cyan-500 text-white flex items-center justify-center">
-              <ArrowRight className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="text-cyan-400 font-bold text-2xl">₹50 OFF</div>
-              <div className="text-gray-400 text-xs uppercase tracking-widest">For 300+ Students</div>
-            </div>
+  <section className="py-24 bg-[#000d2e] relative overflow-hidden">
+    <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "40px 40px" }}></div>
+    <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+      {/* Heading */}
+      <div className="text-center mb-14">
+        <p className="text-secondary-green text-xs uppercase tracking-[0.3em] font-semibold mb-3">Step Inside the Future</p>
+        <h2 className="text-4xl md:text-5xl font-bold font-display text-white mb-4">Experiences That Stay With You</h2>
+        <p className="text-gray-400 max-w-xl mx-auto text-base leading-relaxed">
+          From the Big Bang to the Jurassic Era — every session is a world your students will never forget.
+        </p>
+      </div>
+
+      {/* Image Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-3 grid-rows-3 md:grid-rows-2 gap-3 md:gap-4 mb-14" style={{ height: "560px" }}>
+        {/* Large feature image */}
+        <div className="col-span-1 md:col-span-2 row-span-2 relative rounded-2xl overflow-hidden group cursor-pointer">
+          <img
+            src={`${import.meta.env.BASE_URL}images/experiences/${experiences[0].img}`}
+            alt={experiences[0].label}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+          <div className="absolute bottom-5 left-5">
+            <span className="text-xs text-secondary-green font-semibold uppercase tracking-widest bg-secondary-green/10 border border-secondary-green/30 px-3 py-1 rounded-full">{experiences[0].tag}</span>
+            <p className="text-white font-bold text-xl mt-2">{experiences[0].label}</p>
           </div>
         </div>
+
+        {/* Small images */}
+        {experiences.slice(1).map((exp) => (
+          <div key={exp.img} className="relative rounded-2xl overflow-hidden group cursor-pointer">
+            <img
+              src={`${import.meta.env.BASE_URL}images/experiences/${exp.img}`}
+              alt={exp.label}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+            <div className="absolute bottom-3 left-3">
+              <span className="text-[10px] text-secondary-green font-semibold uppercase tracking-widest bg-secondary-green/10 border border-secondary-green/30 px-2 py-0.5 rounded-full">{exp.tag}</span>
+              <p className="text-white font-semibold text-sm mt-1 leading-tight">{exp.label}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* CTA */}
+      <div className="text-center">
+        <p className="text-gray-400 mb-6 text-sm">Ready to bring these experiences to your school?</p>
         <button
           onClick={onBook}
-          className="bg-secondary-green text-white px-12 py-5 rounded-full text-sm font-bold hover:scale-105 active:scale-95 transition-all shadow-[0_0_30px_rgba(145,218,64,0.3)]"
+          className="bg-secondary-green text-white px-12 py-5 rounded-full text-sm font-bold hover:scale-105 active:scale-95 transition-all shadow-[0_0_40px_rgba(145,218,64,0.35)] tracking-widest"
         >
           ENQUIRE NOW FOR BOOKING
         </button>

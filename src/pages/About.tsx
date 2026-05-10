@@ -307,7 +307,7 @@ export default function AboutPage() {
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative order-2 lg:order-1">
               <div className="absolute -bottom-8 -left-8 w-64 h-64 bg-primary-navy/5 rounded-full blur-3xl" />
               <div className="bg-secondary-green p-2 rounded-[40px] shadow-2xl rotate-2">
-                <img src={`${import.meta.env.BASE_URL}images/about-student.jpeg`} alt="Students experiencing VR" className="w-full rounded-[32px] object-cover" />
+                <img src={`${import.meta.env.BASE_URL}images/about-student.avif`} alt="Students experiencing VR" className="w-full rounded-[32px] object-cover" />
               </div>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="order-1 lg:order-2">
