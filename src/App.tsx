@@ -222,6 +222,7 @@ const Hero = ({ onBook }: { onBook: () => void }) => (
           360° VR Immersive <br />
           <span className="text-secondary-green">Learning Program</span>
         </h1>
+        <p className="text-2xl md:text-3xl font-bold text-secondary-green tracking-wide">See. Feel. Learn.</p>
         <p className="text-lg md:text-xl text-gray-300 max-w-xl leading-relaxed">
           Learn. Experience. Remember Forever. Our program takes students on an unforgettable journey through the universe, from the Big Bang to the Moon Landing!
         </p>
