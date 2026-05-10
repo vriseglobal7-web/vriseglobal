@@ -267,7 +267,7 @@ export default function AboutPage() {
                   We developed India's first school-focused, fully-managed VR learning program — bringing high-fidelity, curriculum-aligned 360° experiences directly to schools. No capital investment required from schools. No complicated setup. Just pure, unforgettable immersive learning.
                 </p>
                 <p>
-                  Today, VRISE Global is trusted by 300+ schools across multiple states, having transformed how over 50,000 students experience education. And we're just getting started.
+                  We are at the beginning of something big. Every school we visit, every student who puts on a headset for the first time — that's the moment we're building towards. The journey has just begun.
                 </p>
               </div>
             </motion.div>
