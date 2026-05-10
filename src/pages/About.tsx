@@ -252,32 +252,24 @@ export default function AboutPage() {
 
       {/* Our Story */}
       <section className="py-24 bg-white">
-        <div className="container mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-8">Our Story</h2>
-              <div className="space-y-5 text-gray-600 text-lg leading-relaxed">
-                <p>
-                  VRISE Global was born from a simple, powerful observation: classrooms across India were filled with curious minds being taught about the Big Bang, dinosaurs, and ancient civilizations — but only through textbooks and static images.
-                </p>
-                <p>
-                  We knew there had to be a better way. So we built it.
-                </p>
-                <p>
-                  We developed India's first school-focused, fully-managed VR learning program — bringing high-fidelity, curriculum-aligned 360° experiences directly to schools. No capital investment required from schools. No complicated setup. Just pure, unforgettable immersive learning.
-                </p>
-                <p>
-                  We are at the beginning of something big. Every school we visit, every student who puts on a headset for the first time — that's the moment we're building towards. The journey has just begun.
-                </p>
-              </div>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
-              <div className="absolute -top-8 -right-8 w-64 h-64 bg-secondary-green/10 rounded-full blur-3xl" />
-              <div className="bg-primary-navy p-2 rounded-[40px] shadow-2xl -rotate-2">
-                <img src={`${import.meta.env.BASE_URL}images/vrisefounder.jpeg`} alt="VRISE Global Founder" className="w-3/4 mx-auto rounded-[32px] object-contain" />
-              </div>
-            </motion.div>
-          </div>
+        <div className="container mx-auto px-6 md:px-12 max-w-5xl">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-8">Our Story</h2>
+            <div className="space-y-5 text-gray-600 text-lg leading-relaxed">
+              <p>
+                VRISE Global was born from a simple, powerful observation: classrooms across India were filled with curious minds being taught about the Big Bang, dinosaurs, and ancient civilizations — but only through textbooks and static images.
+              </p>
+              <p>
+                We knew there had to be a better way. So we built it.
+              </p>
+              <p>
+                We developed India's first school-focused, fully-managed VR learning program — bringing high-fidelity, curriculum-aligned 360° experiences directly to schools. No capital investment required from schools. No complicated setup. Just pure, unforgettable immersive learning.
+              </p>
+              <p>
+                We are at the beginning of something big. Every school we visit, every student who puts on a headset for the first time — that's the moment we're building towards. The journey has just begun.
+              </p>
+            </div>
+          </motion.div>
         </div>
       </section>
 
