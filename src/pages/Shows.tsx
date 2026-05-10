@@ -424,12 +424,18 @@ export default function ShowsPage() {
             </p>
             {/* Show selector pills */}
             <div className="flex flex-wrap justify-center gap-4">
-              <a href="#big-bang" className="bg-secondary-green text-white px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-all">
+              <button
+                onClick={() => openModal("Big Bang Theory")}
+                className="bg-secondary-green text-white px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-all"
+              >
                 01 · Big Bang Theory
-              </a>
-              <a href="#jurassic" className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-white/20 transition-all">
+              </button>
+              <button
+                onClick={() => openModal("Jurassic Era & Beyond")}
+                className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-white/20 transition-all"
+              >
                 02 · Jurassic Era &amp; Beyond
-              </a>
+              </button>
             </div>
           </motion.div>
         </div>
