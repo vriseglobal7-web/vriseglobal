@@ -281,8 +281,73 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Mission, Vision, Values */}
+      {/* Founder */}
       <section className="py-24 bg-[#fbf8ff]">
+        <div className="container mx-auto px-6 md:px-12">
+          <div className="text-center mb-16">
+            <p className="text-secondary-green text-xs uppercase tracking-[0.3em] font-semibold mb-3">The Visionary</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-navy">Meet the Founder</h2>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Photo */}
+            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="flex justify-center">
+              <div className="relative w-4/5">
+                <div className="absolute -top-10 -left-10 w-56 h-56 bg-secondary-green/10 rounded-full blur-3xl" />
+                <div className="absolute -bottom-10 -right-10 w-56 h-56 bg-primary-navy/10 rounded-full blur-3xl" />
+                <div className="bg-primary-navy p-2 rounded-[40px] shadow-2xl rotate-2 relative z-10">
+                  <img
+                    src={`${import.meta.env.BASE_URL}images/vrisefounder.jpeg`}
+                    alt="Krishan Dubey — Founder, VRISE Global"
+                    className="w-full rounded-[32px] object-contain"
+                  />
+                </div>
+                <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 z-20 bg-white rounded-2xl shadow-xl px-6 py-3 flex items-center gap-3 border border-gray-100">
+                  <div className="w-10 h-10 rounded-full bg-secondary-green/10 flex items-center justify-center">
+                    <BadgeCheck className="w-5 h-5 text-secondary-green" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-primary-navy">9+ Years</p>
+                    <p className="text-xs text-gray-400">School Experience</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Content */}
+            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+              <h3 className="text-3xl md:text-4xl font-bold text-primary-navy mb-2">Krishan Dubey</h3>
+              <p className="text-secondary-green font-semibold text-sm uppercase tracking-widest mb-6">Founder & Director, VRISE Global</p>
+              <div className="space-y-5 text-gray-600 text-base leading-relaxed">
+                <p>
+                  Krishan Dubey didn't build VRISE Global from a boardroom — he built it from classrooms. With over <span className="font-bold text-primary-navy">9 years spent working directly within schools</span>, he experienced first-hand the hunger students have for learning that goes beyond the page.
+                </p>
+                <p>
+                  He watched students light up during demonstrations and go quiet during lectures. He saw how a single powerful experience could ignite curiosity that no textbook had managed to spark. That observation became his obsession — and eventually, his purpose.
+                </p>
+                <p>
+                  Krishan founded VRISE Global with one conviction: <span className="italic text-primary-navy font-medium">"Every child deserves to feel what they are studying."</span> His deep understanding of school operations, teacher needs, and student learning patterns is what makes VRISE programs truly school-ready — not just technologically impressive.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-4 mt-8">
+                {[
+                  { label: "Years in Schools", value: "9+" },
+                  { label: "Schools Impacted", value: "50+" },
+                  { label: "Students Reached", value: "10,000+" },
+                  { label: "VR Experiences", value: "2 & Growing" },
+                ].map((stat) => (
+                  <div key={stat.label} className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm">
+                    <p className="text-2xl font-bold text-secondary-green">{stat.value}</p>
+                    <p className="text-xs text-gray-500 uppercase tracking-wider mt-1">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission, Vision, Values */}
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-6 md:px-12">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-4">What Drives Us</h2>
