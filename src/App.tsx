@@ -219,7 +219,18 @@ const Navbar = ({ onBook }: { onBook: () => void }) => {
 
 const Hero = ({ onBook }: { onBook: () => void }) => (
   <section className="relative min-h-screen flex items-center pt-20 overflow-hidden hero-gradient">
-    <div className="absolute inset-0 bg-gradient-to-r from-[#001851] via-[#001851]/70 to-transparent"></div>
+    {/* Mobile background image */}
+    <div className="absolute inset-0 lg:hidden">
+      <img
+        src={`${import.meta.env.BASE_URL}images/hero-vr.png`}
+        alt=""
+        className="w-full h-full object-cover object-center opacity-50"
+      />
+    </div>
+    {/* Overlay — dark on mobile, gradient on desktop */}
+    <div className="absolute inset-0 bg-[#001851]/60 lg:bg-transparent"></div>
+    <div className="absolute inset-0 hidden lg:block bg-gradient-to-r from-[#001851] via-[#001851]/70 to-transparent"></div>
+
     <div className="container mx-auto px-6 md:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       <motion.div
         initial={{ opacity: 0, x: -50 }}
