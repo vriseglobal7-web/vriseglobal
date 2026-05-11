@@ -256,7 +256,7 @@ const Hero = ({ onBook }: { onBook: () => void }) => (
       >
         <div className="absolute -inset-4 bg-secondary-green/30 blur-3xl rounded-full animate-pulse"></div>
         <img
-          src={`${import.meta.env.BASE_URL}images/hero-vr.jpeg`}
+          src={`${import.meta.env.BASE_URL}images/hero-vr.png`}
           alt="Student with VR"
           className="relative z-10 w-full rounded-3xl shadow-2xl border border-white/10 animate-float"
         />
