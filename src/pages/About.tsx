@@ -428,25 +428,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 bg-gradient-to-br from-[#001851] to-[#002b7f] relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "40px 40px" }} />
-        </div>
-        <div className="container mx-auto px-6 md:px-12 relative z-10 text-center text-white">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Bring VR to Your School?</h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-10">Join 300+ schools that have already transformed learning for their students. Booking is simple, and there's no investment required from your school.</p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <button onClick={() => setModalOpen(true)} className="bg-secondary-green text-white px-10 py-4 rounded-full font-bold text-sm flex items-center gap-2 hover:scale-105 transition-all shadow-[0_0_30px_rgba(145,218,64,0.3)]">
-              Book a Session <ArrowRight className="w-4 h-4" />
-            </button>
-            <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 px-8 py-4 rounded-full">
-              <CheckCircle2 className="w-5 h-5 text-secondary-green" />
-              <span className="text-sm font-medium">Starts at ₹600 per student</span>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <Footer />
       {modalOpen && <BookingModal onClose={() => setModalOpen(false)} />}
