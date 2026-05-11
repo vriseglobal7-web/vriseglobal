@@ -305,7 +305,7 @@ export default function AboutPage() {
                 <div className="bg-primary-navy p-2 rounded-[40px] shadow-2xl rotate-2 relative z-10">
                   <img
                     src={`${import.meta.env.BASE_URL}images/vrisefounder.jpeg`}
-                    alt="Krishan Dubey — Founder, VRISE Global"
+                    alt="Krishen Kant Dubey — Founder, VRISE Global"
                     className="w-full rounded-[32px] object-contain"
                   />
                 </div>
@@ -323,17 +323,17 @@ export default function AboutPage() {
 
             {/* Content */}
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <h3 className="text-3xl md:text-4xl font-bold text-primary-navy mb-2">Krishan Dubey</h3>
+              <h3 className="text-3xl md:text-4xl font-bold text-primary-navy mb-2">Krishen Kant Dubey</h3>
               <p className="text-secondary-green font-semibold text-sm uppercase tracking-widest mb-6">Founder & Director, VRISE Global</p>
               <div className="space-y-5 text-gray-600 text-base leading-relaxed">
                 <p>
-                  Krishan Dubey didn't build VRISE Global from a boardroom — he built it from classrooms. With over <span className="font-bold text-primary-navy">9 years spent working directly within schools</span>, he experienced first-hand the hunger students have for learning that goes beyond the page.
+                  Krishen Kant Dubey didn't build VRISE Global from a boardroom — he built it from classrooms. With over <span className="font-bold text-primary-navy">9 years spent working directly within schools</span>, he experienced first-hand the hunger students have for learning that goes beyond the page.
                 </p>
                 <p>
                   He watched students light up during demonstrations and go quiet during lectures. He saw how a single powerful experience could ignite curiosity that no textbook had managed to spark. That observation became his obsession — and eventually, his purpose.
                 </p>
                 <p>
-                  Krishan founded VRISE Global with one conviction: <span className="italic text-primary-navy font-medium">"Every child deserves to feel what they are studying."</span> His deep understanding of school operations, teacher needs, and student learning patterns is what makes VRISE programs truly school-ready — not just technologically impressive.
+                  Krishen founded VRISE Global with one conviction: <span className="italic text-primary-navy font-medium">"Every child deserves to feel what they are studying."</span> His deep understanding of school operations, teacher needs, and student learning patterns is what makes VRISE programs truly school-ready — not just technologically impressive.
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-4 mt-8">
