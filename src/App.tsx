@@ -257,7 +257,7 @@ const Navbar = ({ onBook }: { onBook: () => void }) => {
 };
 
 const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void }) => (
-  <section className="relative min-h-screen flex items-center pt-20 overflow-hidden hero-gradient">
+  <section className="relative min-h-screen flex items-center pt-20 pb-16 lg:pb-0 overflow-hidden hero-gradient">
     {/* Mobile background image */}
     <div className="absolute inset-0 lg:hidden">
       <img
