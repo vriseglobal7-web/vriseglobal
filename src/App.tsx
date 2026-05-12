@@ -23,6 +23,7 @@ import {
   X,
   Loader2,
   Menu,
+  Play,
 } from "lucide-react";
 
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID as string;
@@ -185,6 +186,44 @@ const BookingModal = ({ onClose, defaultExperience = "" }: BookingModalProps) =>
   );
 };
 
+const TrailerModal = ({ onClose }: { onClose: () => void }) => (
+  <AnimatePresence>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-10"
+      onClick={onClose}
+    >
+      <div className="absolute inset-0 bg-black/85 backdrop-blur-sm" />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+        className="relative w-full max-w-4xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute -top-10 right-0 text-white/70 hover:text-white flex items-center gap-2 text-sm transition-colors"
+        >
+          <X className="w-4 h-4" /> Close
+        </button>
+        <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl">
+          <iframe
+            src="https://www.youtube.com/embed/mdF_GIDgUD0?autoplay=1&rel=0"
+            title="VRISE Global VR Trailer"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full"
+          />
+        </div>
+      </motion.div>
+    </motion.div>
+  </AnimatePresence>
+);
+
 const Navbar = ({ onBook }: { onBook: () => void }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
@@ -217,7 +256,7 @@ const Navbar = ({ onBook }: { onBook: () => void }) => {
   );
 };
 
-const Hero = ({ onBook }: { onBook: () => void }) => (
+const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void }) => (
   <section className="relative min-h-screen flex items-center pt-20 overflow-hidden hero-gradient">
     {/* Mobile background image */}
     <div className="absolute inset-0 lg:hidden">
@@ -256,6 +295,10 @@ const Hero = ({ onBook }: { onBook: () => void }) => (
           <button onClick={onBook} className="bg-secondary-green text-white px-8 py-4 rounded-full text-sm font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(145,218,64,0.4)] transition-all">
             Book Now
             <ArrowRight className="w-4 h-4" />
+          </button>
+          <button onClick={onTrailer} className="border-2 border-white/40 text-white px-8 py-4 rounded-full text-sm font-bold flex items-center gap-2 hover:bg-white/10 transition-all backdrop-blur-sm">
+            <Play className="w-4 h-4 fill-white" />
+            Watch Trailer
           </button>
         </div>
       </motion.div>
@@ -541,6 +584,7 @@ const Footer = () => (
 export default function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [defaultExperience, setDefaultExperience] = useState("");
+  const [trailerOpen, setTrailerOpen] = useState(false);
   const navigate = useNavigate();
 
   const openModal = (experience = "") => {
@@ -556,7 +600,7 @@ export default function App() {
     <div className="min-h-screen bg-white">
       <Navbar onBook={() => openModal()} />
       <main>
-        <Hero onBook={() => openModal()} />
+        <Hero onBook={() => openModal()} onTrailer={() => setTrailerOpen(true)} />
         <Benefits />
         <NowShowing onBook={openModal} onLearnMore={goToShow} />
         <About />
@@ -564,6 +608,7 @@ export default function App() {
       </main>
       <Footer />
       {modalOpen && <BookingModal onClose={() => setModalOpen(false)} defaultExperience={defaultExperience} />}
+      {trailerOpen && <TrailerModal onClose={() => setTrailerOpen(false)} />}
     </div>
   );
 }
