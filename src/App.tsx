@@ -472,11 +472,11 @@ const About = () => (
 );
 
 const experiences = [
-  { img: "premium_photo-1663091224337-38e68aad44ce.avif.avif", label: "VR Headset Experience", tag: "Immersive", span: "col-span-2 row-span-2" },
-  { img: "premium_photo-1663054493138-0a90944f1366.avif", label: "Classroom Discovery", tag: "Interactive", span: "" },
-  { img: "premium_photo-1663091490635-3f757659ce10.avif", label: "Group Learning Session", tag: "Collaborative", span: "" },
-  { img: "premium_photo-1665203583049-4c23499c3769.avif", label: "Virtual Field Trip", tag: "Exploratory", span: "" },
-  { img: "premium_photo-1682124393358-92254bdf2065.avif", label: "360° Science Journey", tag: "Curriculum-Linked", span: "" },
+  { img: "lucid-origin_create_a_image_where_Indian_school_student_wearing_uniform_using_VR._VR_on_eyes_-0.jpg", label: "VR Headset Experience", tag: "Immersive", span: "col-span-2 row-span-2" },
+  { img: "54b73a77-6844-4c44-9262-0f161fae529c.png", label: "Classroom Discovery", tag: "Interactive", span: "" },
+  { img: "b9f2667b-c000-44fa-b0ed-ef73be2b8157.png", label: "Group Learning Session", tag: "Collaborative", span: "" },
+  { img: "premium_photo-1663054493138-0a90944f1366.avif", label: "Virtual Field Trip", tag: "Exploratory", span: "" },
+  { img: "premium_photo-1663091490635-3f757659ce10.avif", label: "360° Science Journey", tag: "Curriculum-Linked", span: "" },
 ];
 
 const PricingCTA = ({ onBook }: { onBook: () => void }) => (
