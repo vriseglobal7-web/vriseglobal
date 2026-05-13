@@ -493,13 +493,13 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
       </div>
 
       {/* Image Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 grid-rows-3 md:grid-rows-2 gap-3 md:gap-4 mb-14" style={{ height: "560px" }}>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-14">
         {/* Large feature image */}
-        <div className="col-span-1 md:col-span-2 row-span-2 relative rounded-2xl overflow-hidden group cursor-pointer">
+        <div className="col-span-2 aspect-[4/3] relative rounded-2xl overflow-hidden group cursor-pointer">
           <img
             src={`${import.meta.env.BASE_URL}images/experiences/${experiences[0].img}`}
             alt={experiences[0].label}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
           <div className="absolute bottom-5 left-5">
@@ -510,11 +510,11 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
 
         {/* Small images */}
         {experiences.slice(1).map((exp) => (
-          <div key={exp.img} className="relative rounded-2xl overflow-hidden group cursor-pointer">
+          <div key={exp.img} className="aspect-[4/3] relative rounded-2xl overflow-hidden group cursor-pointer">
             <img
               src={`${import.meta.env.BASE_URL}images/experiences/${exp.img}`}
               alt={exp.label}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
             <div className="absolute bottom-3 left-3">
