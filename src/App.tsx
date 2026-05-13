@@ -495,7 +495,7 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
       {/* Image Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-14">
         {/* Large feature image */}
-        <div className="col-span-2 aspect-[4/3] relative rounded-2xl overflow-hidden group cursor-pointer">
+        <div className="col-span-2 aspect-[16/7] relative rounded-2xl overflow-hidden group cursor-pointer">
           <img
             src={`${import.meta.env.BASE_URL}images/experiences/${experiences[0].img}`}
             alt={experiences[0].label}
