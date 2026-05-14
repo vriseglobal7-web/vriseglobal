@@ -401,20 +401,20 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
             >
               <img src={show.img} alt={show.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent"></div>
-              <div className="absolute bottom-0 left-0 w-full p-8 space-y-4">
+              <div className="absolute bottom-0 left-0 w-full p-4 md:p-8 space-y-2 md:space-y-4">
                 <span className={`inline-block ${show.tagColor} text-white px-3 py-1 rounded-full text-xs font-bold`}>{show.tag}</span>
-                <h3 className="text-3xl font-bold text-white">{show.title}</h3>
-                <p className="text-gray-300 max-w-md">{show.desc}</p>
-                <div className="flex gap-4 pt-2">
+                <h3 className="text-xl md:text-3xl font-bold text-white">{show.title}</h3>
+                <p className="text-gray-300 max-w-md text-sm md:text-base hidden sm:block">{show.desc}</p>
+                <div className="flex gap-3 pt-1">
                   <button
                     onClick={() => onBook(show.title)}
-                    className="bg-white text-primary-navy px-6 py-2 rounded-full text-sm font-bold hover:bg-secondary-green hover:text-white transition-colors"
+                    className="bg-white text-primary-navy px-4 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold hover:bg-secondary-green hover:text-white transition-colors"
                   >
                     Book Now
                   </button>
                   <button
                     onClick={() => onLearnMore(show.id)}
-                    className="bg-white/10 backdrop-blur-md text-white border border-white/20 px-6 py-2 rounded-full text-sm font-bold hover:bg-white/20 transition-colors"
+                    className="bg-white/10 backdrop-blur-md text-white border border-white/20 px-4 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold hover:bg-white/20 transition-colors"
                   >
                     Learn More
                   </button>
