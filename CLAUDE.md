@@ -11,7 +11,14 @@ npm run build        # production build to dist/
 npm run preview      # preview production build
 npm run lint         # type-check with tsc --noEmit (no test suite)
 npm run clean        # remove dist/
-npm run deploy       # gh-pages deploy (runs build first via predeploy)
+npm run deploy       # gh-pages deploy (runs build first via predeploy) — not used in production
+```
+
+## Deployment
+
+Hosted on **Vercel** at `vriseglobal.co.in` (redirects to `www.vriseglobal.co.in`). Vercel auto-deploys on push to the main branch. SPA routing is handled via `vercel.json` rewrites. SSL is provisioned automatically by Vercel.
+
+```bash
 ```
 
 ## Environment
