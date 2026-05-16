@@ -24,6 +24,9 @@ import {
   Loader2,
   Menu,
   Play,
+  Eye,
+  Pointer,
+  BookOpen,
 } from "lucide-react";
 
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID as string;
@@ -285,9 +288,38 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
           360° VR Immersive <br />
           <span className="text-secondary-green">Learning Program</span>
         </h1>
-        <p className="text-3xl md:text-4xl italic font-light text-secondary-green tracking-widest" style={{ fontFamily: "'Lexend', sans-serif", textShadow: "0 0 30px rgba(145,218,64,0.4)" }}>
-          " See. Feel. Learn. "
-        </p>
+        <div className="space-y-4">
+          <div className="text-4xl md:text-5xl font-black tracking-wider leading-tight">
+            <span style={{ color: '#4ade80' }}>SEE.</span>{' '}
+            <span style={{ color: '#60a5fa' }}>FEEL.</span>{' '}
+            <span style={{ color: '#a78bfa' }}>LEARN.</span>
+          </div>
+          <div className="flex items-center gap-5 text-white">
+            <div className="flex items-center gap-2">
+              <Eye className="w-5 h-5 flex-shrink-0" style={{ color: '#4ade80' }} />
+              <div>
+                <div className="text-xs font-bold tracking-widest" style={{ color: '#4ade80' }}>SEE</div>
+                <div className="text-xs text-gray-400 tracking-widest">BEYOND</div>
+              </div>
+            </div>
+            <div className="w-px h-8 bg-white/20" />
+            <div className="flex items-center gap-2">
+              <Pointer className="w-5 h-5 flex-shrink-0" style={{ color: '#60a5fa' }} />
+              <div>
+                <div className="text-xs font-bold tracking-widest" style={{ color: '#60a5fa' }}>FEEL</div>
+                <div className="text-xs text-gray-400 tracking-widest">REALITY</div>
+              </div>
+            </div>
+            <div className="w-px h-8 bg-white/20" />
+            <div className="flex items-center gap-2">
+              <BookOpen className="w-5 h-5 flex-shrink-0" style={{ color: '#a78bfa' }} />
+              <div>
+                <div className="text-xs font-bold tracking-widest" style={{ color: '#a78bfa' }}>LEARN</div>
+                <div className="text-xs text-gray-400 tracking-widest">LIMITLESSLY</div>
+              </div>
+            </div>
+          </div>
+        </div>
         <p className="text-lg md:text-xl text-gray-300 max-w-xl leading-relaxed">
           Learn. Experience. Remember Forever. Our program takes students on an unforgettable journey through the universe, from the Big Bang to the Moon Landing!
         </p>
