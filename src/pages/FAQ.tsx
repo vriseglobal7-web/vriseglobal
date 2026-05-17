@@ -147,7 +147,7 @@ const Navbar = ({ onBook }: { onBook: () => void }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <nav className="fixed top-0 left-0 w-full z-[100] glass-nav shadow-sm">
-      <div className="w-full px-[50px] md:container md:mx-auto md:px-12 py-1 flex justify-between items-center">
+      <div className="w-full px-5 md:container md:mx-auto md:px-12 py-1 flex justify-between items-center">
         <Link to="/"><VriseLogo /></Link>
         <div className="hidden md:flex items-center gap-8">
           <Link to="/" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">Home</Link>
