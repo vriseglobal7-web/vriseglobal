@@ -1,4 +1,5 @@
 import { useState } from "react";
+import VriseLogo from "./components/VriseLogo";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -70,8 +71,8 @@ const Navbar = ({ onBook }: { onBook: () => void }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <nav className="fixed top-0 left-0 w-full z-[100] glass-nav shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
-        <div className="text-2xl font-bold font-display text-primary-navy">VRISE Global</div>
+      <div className="w-full px-[50px] md:container md:mx-auto md:px-12 py-1 flex justify-between items-center">
+        <Link to="/"><VriseLogo /></Link>
         <div className="hidden md:flex items-center gap-8">
           <Link to="/" className="text-secondary-green font-bold border-b-2 border-secondary-green text-sm">Home</Link>
           <Link to="/about" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">About Us</Link>
@@ -113,7 +114,7 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
     <div className="absolute inset-0 bg-[#001851]/60 lg:bg-transparent"></div>
     <div className="absolute inset-0 hidden lg:block bg-gradient-to-r from-[#001851] via-[#001851]/70 to-transparent"></div>
 
-    <div className="container mx-auto px-6 md:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div className="w-full px-[50px] md:container md:mx-auto md:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
@@ -129,7 +130,7 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
           <span className="text-secondary-green">Learning Program</span>
         </h1>
         <div className="space-y-4">
-          <div className="text-4xl md:text-5xl font-black tracking-wider leading-tight">
+          <div className="text-2xl md:text-4xl lg:text-5xl font-black tracking-wide md:tracking-wider leading-tight whitespace-nowrap">
             <span style={{ color: '#4ade80' }}>SEE.</span>{' '}
             <span style={{ color: '#60a5fa' }}>FEEL.</span>{' '}
             <span style={{ color: '#a78bfa' }}>LEARN.</span>
@@ -203,7 +204,7 @@ const Benefits = () => {
 
   return (
     <section className="py-24 bg-white">
-      <div className="container mx-auto px-6 md:px-12">
+      <div className="w-full px-[50px] md:container md:mx-auto md:px-12">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-4">Why VRISE for Your School?</h2>
           <p className="text-lg text-gray-600">Bringing the world's most advanced learning technology directly to your classroom with zero investment required from the school.</p>
@@ -250,7 +251,7 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
 
   return (
     <section className="py-24 bg-primary-navy text-white overflow-hidden">
-      <div className="container mx-auto px-6 md:px-12">
+      <div className="w-full px-[50px] md:container md:mx-auto md:px-12">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
           <div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Now Showing</h2>
@@ -303,7 +304,7 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
 
 const About = () => (
   <section className="py-24 bg-[#fbf8ff]">
-    <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <div className="w-full px-[50px] md:container md:mx-auto md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
       <div className="order-2 lg:order-1">
         <div className="relative inline-block mb-6">
           <div className="text-4xl font-bold text-primary-navy flex items-center gap-2">
@@ -356,7 +357,7 @@ const experiences = [
 const PricingCTA = ({ onBook }: { onBook: () => void }) => (
   <section className="py-24 bg-[#000d2e] relative overflow-hidden">
     <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "40px 40px" }}></div>
-    <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+    <div className="w-full px-[50px] md:max-w-7xl md:mx-auto md:px-12 relative z-10">
       {/* Heading */}
       <div className="text-center mb-14">
         <p className="text-secondary-green text-xs uppercase tracking-[0.3em] font-semibold mb-3">Step Inside the Future</p>
@@ -417,7 +418,7 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
 
 const Footer = () => (
   <footer className="bg-[#001851] text-white pt-24 pb-12 border-t border-white/10">
-    <div className="max-w-7xl mx-auto px-6 md:px-12">
+    <div className="w-full px-[50px] md:max-w-7xl md:mx-auto md:px-12">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
         <div className="space-y-6">
           <div className="text-3xl font-bold font-display">VRISE Global</div>

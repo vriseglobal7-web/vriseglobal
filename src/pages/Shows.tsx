@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import type React from "react";
 import { Link, useLocation } from "react-router-dom";
+import VriseLogo from "../components/VriseLogo";
 import { motion } from "motion/react";
 import {
   ArrowRight,
@@ -29,8 +30,8 @@ const Navbar = ({ onBook }: { onBook: () => void }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <nav className="fixed top-0 left-0 w-full z-[100] glass-nav shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold font-display text-primary-navy">VRISE Global</Link>
+      <div className="w-full px-[50px] md:container md:mx-auto md:px-12 py-1 flex justify-between items-center">
+        <Link to="/"><VriseLogo /></Link>
         <div className="hidden md:flex items-center gap-8">
           <Link to="/" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">Home</Link>
           <Link to="/about" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">About Us</Link>
@@ -59,7 +60,7 @@ const Navbar = ({ onBook }: { onBook: () => void }) => {
 
 const Footer = () => (
   <footer className="bg-[#001851] text-white pt-24 pb-12 border-t border-white/10">
-    <div className="max-w-7xl mx-auto px-6 md:px-12">
+    <div className="w-full px-[50px] md:max-w-7xl md:mx-auto md:px-12">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
         <div className="space-y-6">
           <div className="text-3xl font-bold font-display">VRISE Global</div>
@@ -180,7 +181,7 @@ const shows: Show[] = [
 
 const ShowCard = ({ show, onBook }: { show: Show; onBook: (exp: string) => void }) => (
   <section className="py-24 odd:bg-white even:bg-[#fbf8ff]" id={show.id}>
-    <div className="container mx-auto px-6 md:px-12">
+    <div className="w-full px-[50px] md:container md:mx-auto md:px-12">
       {/* Title */}
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
         <span className={`inline-block ${show.tagColor} text-white px-4 py-1 rounded-full text-xs font-bold mb-4`}>{show.tag}</span>
@@ -307,7 +308,7 @@ export default function ShowsPage() {
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "40px 40px" }} />
         </div>
-        <div className="container mx-auto px-6 md:px-12 relative z-10 text-center">
+        <div className="w-full px-[50px] md:container md:mx-auto md:px-12 relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <div className="inline-flex items-center gap-2 bg-secondary-green/20 text-secondary-green border border-secondary-green/30 px-4 py-2 rounded-full text-xs font-bold mb-6">
               <BadgeCheck className="w-4 h-4" /> CURRICULUM-ALIGNED VR EXPERIENCES
@@ -347,7 +348,7 @@ export default function ShowsPage() {
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "40px 40px" }} />
         </div>
-        <div className="container mx-auto px-6 md:px-12 relative z-10 text-center text-white">
+        <div className="w-full px-[50px] md:container md:mx-auto md:px-12 relative z-10 text-center text-white">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">Can't Choose? Book Both!</h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-10">
             Many schools book both experiences for a full immersive learning day. Students get to travel through space and time — all in one visit.
