@@ -80,7 +80,7 @@ const Navbar = ({ onBook }: { onBook: () => void }) => {
           <Link to="/faq" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">FAQs</Link>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={onBook} className="bg-secondary-green text-white px-6 py-2 rounded-full text-sm font-bold hover:scale-105 transition-all shadow-md">Book Now</button>
+          <button onClick={onBook} className="bg-secondary-green text-white px-4 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold hover:scale-105 transition-all shadow-md">Book Now</button>
           <button className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <X className="w-5 h-5 text-primary-navy" /> : <Menu className="w-5 h-5 text-primary-navy" />}
           </button>
@@ -135,7 +135,7 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
             <span style={{ color: '#60a5fa' }}>FEEL.</span>{' '}
             <span style={{ color: '#a78bfa' }}>LEARN.</span>
           </div>
-          <div className="flex items-center gap-5 text-white">
+          <div className="flex items-center gap-3 sm:gap-5 text-white">
             <div className="flex items-center gap-2">
               <Eye className="w-5 h-5 flex-shrink-0" style={{ color: '#4ade80' }} />
               <div>
@@ -156,7 +156,7 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
               <BookOpen className="w-5 h-5 flex-shrink-0" style={{ color: '#a78bfa' }} />
               <div>
                 <div className="text-xs font-bold tracking-widest" style={{ color: '#a78bfa' }}>LEARN</div>
-                <div className="text-xs text-gray-400 tracking-widest">LIMITLESSLY</div>
+                <div className="text-xs text-gray-400 tracking-wide">LIMITLESSLY</div>
               </div>
             </div>
           </div>
