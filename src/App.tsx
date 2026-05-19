@@ -443,6 +443,7 @@ const Footer = () => (
           <ul className="space-y-4 text-gray-400">
             <li className="flex items-center gap-3"><Phone className="text-secondary-green w-5 h-5" /> +91 98991 57132</li>
             <li className="flex items-center gap-3"><Mail className="text-secondary-green w-5 h-5" /> vriseglobal7@gmail.com</li>
+            <li className="flex items-center gap-3"><Mail className="text-secondary-green w-5 h-5" /> bhalinder@vriseglobal.co.in</li>
             <li className="flex items-center gap-3"><MapPin className="text-secondary-green w-5 h-5" /> Gurugram, Haryana, India</li>
           </ul>
         </div>
