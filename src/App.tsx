@@ -80,8 +80,8 @@ const Navbar = ({ onBook }: { onBook: () => void }) => {
           <Link to="/faq" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">FAQs</Link>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={onBook} className="bg-secondary-green text-white px-4 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold hover:scale-105 transition-all shadow-md">Book Now</button>
-          <button className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" onClick={() => setMenuOpen(!menuOpen)}>
+          <button onClick={onBook} className="bg-secondary-green text-primary-navy px-4 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold hover:scale-105 transition-all shadow-md">Book Now</button>
+          <button aria-label={menuOpen ? "Close menu" : "Open menu"} className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <X className="w-5 h-5 text-primary-navy" /> : <Menu className="w-5 h-5 text-primary-navy" />}
           </button>
         </div>
@@ -92,7 +92,7 @@ const Navbar = ({ onBook }: { onBook: () => void }) => {
           <Link to="/about" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors" onClick={() => setMenuOpen(false)}>About Us</Link>
           <Link to="/shows" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors" onClick={() => setMenuOpen(false)}>Our Shows</Link>
           <Link to="/faq" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors" onClick={() => setMenuOpen(false)}>FAQs</Link>
-          <button onClick={() => { onBook(); setMenuOpen(false); }} className="bg-secondary-green text-white px-6 py-2 rounded-full text-sm font-bold w-full mt-2">Book Now</button>
+          <button onClick={() => { onBook(); setMenuOpen(false); }} className="bg-secondary-green text-primary-navy px-6 py-2 rounded-full text-sm font-bold w-full mt-2">Book Now</button>
         </div>
       )}
     </nav>
@@ -167,7 +167,7 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
           Learn. Experience. Remember Forever. Our program takes students on an unforgettable journey through the universe, from the Big Bang to the Moon Landing!
         </p>
         <div className="flex flex-wrap gap-4 pt-4">
-          <button onClick={onBook} className="bg-secondary-green text-white px-8 py-4 rounded-full text-sm font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(145,218,64,0.4)] transition-all">
+          <button onClick={onBook} className="bg-secondary-green text-primary-navy px-8 py-4 rounded-full text-sm font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(145,218,64,0.4)] transition-all">
             Book Now
             <ArrowRight className="w-4 h-4" />
           </button>
@@ -262,10 +262,10 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
             <p className="text-lg text-gray-400 max-w-xl">We have multiple titles and vision for setting up labs in schools to provide a smooth learning experience, Book your school's slot for these award-winning experiences.</p>
           </div>
           <div className="flex gap-4">
-            <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-all">
+            <button aria-label="Previous show" className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-all">
               <ChevronLeft className="w-6 h-6" />
             </button>
-            <button className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-all">
+            <button aria-label="Next show" className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-all">
               <ChevronRight className="w-6 h-6" />
             </button>
           </div>
@@ -417,7 +417,7 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
         <p className="text-gray-400 mb-6 text-sm">Ready to bring these experiences to your school?</p>
         <button
           onClick={onBook}
-          className="bg-secondary-green text-white px-12 py-5 rounded-full text-sm font-bold hover:scale-105 active:scale-95 transition-all shadow-[0_0_40px_rgba(145,218,64,0.35)] tracking-widest"
+          className="bg-secondary-green text-primary-navy px-12 py-5 rounded-full text-sm font-bold hover:scale-105 active:scale-95 transition-all shadow-[0_0_40px_rgba(145,218,64,0.35)] tracking-widest"
         >
           ENQUIRE NOW FOR BOOKING
         </button>
@@ -434,13 +434,13 @@ const Footer = () => (
           <div className="text-3xl font-bold font-display">VRISE Global</div>
           <p className="text-gray-400 leading-relaxed">Experience Beyond Reality. India's premier VR education partner for modern schools.</p>
           <div className="flex gap-4">
-            <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary-green transition-colors"><Instagram size={18} /></a>
-            <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary-green transition-colors"><Facebook size={18} /></a>
-            <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary-green transition-colors"><Twitter size={18} /></a>
+            <a href="#" aria-label="Instagram" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary-green transition-colors"><Instagram size={18} /></a>
+            <a href="#" aria-label="Facebook" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary-green transition-colors"><Facebook size={18} /></a>
+            <a href="#" aria-label="Twitter" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary-green transition-colors"><Twitter size={18} /></a>
           </div>
         </div>
         <div>
-          <h4 className="text-lg font-bold mb-6">Quick Links</h4>
+          <h3 className="text-lg font-bold mb-6">Quick Links</h3>
           <ul className="space-y-4 text-gray-400">
             <li><Link to="/" className="hover:text-secondary-green transition-all">Home</Link></li>
             <li><Link to="/about" className="hover:text-secondary-green transition-all">About Us</Link></li>
@@ -449,7 +449,7 @@ const Footer = () => (
           </ul>
         </div>
         <div>
-          <h4 className="text-lg font-bold mb-6">Contact Detail</h4>
+          <h3 className="text-lg font-bold mb-6">Contact Detail</h3>
           <ul className="space-y-4 text-gray-400">
             <li className="flex items-center gap-3"><Phone className="text-secondary-green w-5 h-5" /> +91 98991 57132</li>
             <li className="flex items-center gap-3"><Mail className="text-secondary-green w-5 h-5" /> vriseglobal7@gmail.com</li>
