@@ -104,9 +104,11 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
     {/* Mobile background image */}
     <div className="absolute inset-0 lg:hidden">
       <img
-        src={`${import.meta.env.BASE_URL}images/hero-vr.png`}
+        src={`${import.meta.env.BASE_URL}images/hero-vr.webp`}
         alt=""
         fetchPriority="high"
+        width={1536}
+        height={1024}
         className="w-full h-full object-cover object-center opacity-50"
       />
     </div>
@@ -183,9 +185,11 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
       >
         <div className="absolute -inset-4 bg-secondary-green/30 blur-3xl rounded-full animate-pulse"></div>
         <img
-          src={`${import.meta.env.BASE_URL}images/hero-vr.png`}
+          src={`${import.meta.env.BASE_URL}images/hero-vr.webp`}
           alt="Student with VR"
           fetchPriority="high"
+          width={1536}
+          height={1024}
           className="relative z-10 w-full rounded-3xl shadow-2xl border border-white/10 animate-float"
         />
       </motion.div>
@@ -236,7 +240,7 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
       title: "Big Bang Theory",
       tag: "20 MIN JOURNEY",
       desc: "An unforgettable journey through the origin of the universe to the moon landing.",
-      img: `${import.meta.env.BASE_URL}images/show-big-bang.jpeg`,
+      img: `${import.meta.env.BASE_URL}images/show-big-bang.webp`,
       tagColor: "bg-secondary-green",
     },
     {
@@ -244,7 +248,7 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
       title: "Jurassic Era & Beyond",
       tag: "POPULAR CHOICE",
       desc: "Travel back in time to witness the majestic reign of dinosaurs and the dawn of life.",
-      img: `${import.meta.env.BASE_URL}images/show-jurassic.jpeg`,
+      img: `${import.meta.env.BASE_URL}images/show-jurassic.webp`,
       tagColor: "bg-red-500",
     },
   ];
@@ -337,6 +341,8 @@ const About = () => (
               src={`${import.meta.env.BASE_URL}images/about-student.avif`}
               alt="Students in VR"
               loading="lazy"
+              width={774}
+              height={1161}
               className="w-full h-full object-cover rounded-[32px]"
             />
           </div>
@@ -347,11 +353,11 @@ const About = () => (
 );
 
 const experiences = [
-  { img: "lucid-origin_create_a_image_where_Indian_school_student_wearing_uniform_using_VR._VR_on_eyes_-0.jpg", label: "VR Headset Experience", tag: "Immersive", span: "col-span-2 row-span-2" },
-  { img: "54b73a77-6844-4c44-9262-0f161fae529c.png", label: "Classroom Discovery", tag: "Interactive", span: "" },
-  { img: "b9f2667b-c000-44fa-b0ed-ef73be2b8157.png", label: "Group Learning Session", tag: "Collaborative", span: "" },
-  { img: "premium_photo-1663054493138-0a90944f1366.avif", label: "Virtual Field Trip", tag: "Exploratory", span: "" },
-  { img: "premium_photo-1663091490635-3f757659ce10.avif", label: "360° Science Journey", tag: "Curriculum-Linked", span: "" },
+  { img: "lucid-origin_create_a_image_where_Indian_school_student_wearing_uniform_using_VR._VR_on_eyes_-0.webp", label: "VR Headset Experience", tag: "Immersive", span: "col-span-2 row-span-2", w: 1024, h: 1024 },
+  { img: "54b73a77-6844-4c44-9262-0f161fae529c.webp", label: "Classroom Discovery", tag: "Interactive", span: "", w: 900, h: 720 },
+  { img: "b9f2667b-c000-44fa-b0ed-ef73be2b8157.webp", label: "Group Learning Session", tag: "Collaborative", span: "", w: 900, h: 720 },
+  { img: "premium_photo-1663054493138-0a90944f1366.avif", label: "Virtual Field Trip", tag: "Exploratory", span: "", w: 1790, h: 1161 },
+  { img: "premium_photo-1663091490635-3f757659ce10.avif", label: "360° Science Journey", tag: "Curriculum-Linked", span: "", w: 900, h: 600 },
 ];
 
 const PricingCTA = ({ onBook }: { onBook: () => void }) => (
@@ -375,6 +381,8 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
             src={`${import.meta.env.BASE_URL}images/experiences/${experiences[0].img}`}
             alt={experiences[0].label}
             loading="lazy"
+            width={experiences[0].w}
+            height={experiences[0].h}
             className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
@@ -391,6 +399,8 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
               src={`${import.meta.env.BASE_URL}images/experiences/${exp.img}`}
               alt={exp.label}
               loading="lazy"
+              width={exp.w}
+              height={exp.h}
               className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
