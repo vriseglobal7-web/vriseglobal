@@ -71,7 +71,7 @@ export const BookingModal = ({ onClose, defaultExperience = "" }: BookingModalPr
                 </div>
                 <h3 className="text-xl font-bold text-primary-navy">Booking Request Sent!</h3>
                 <p className="text-gray-500 max-w-sm">Thank you! Our team will reach out to you within 24 hours to confirm your slot.</p>
-                <button onClick={onClose} className="mt-4 bg-secondary-green text-white px-8 py-3 rounded-full text-sm font-bold hover:scale-105 transition-all">Close</button>
+                <button onClick={onClose} className="mt-4 bg-secondary-green text-primary-navy px-8 py-3 rounded-full text-sm font-bold hover:scale-105 transition-all">Close</button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
@@ -115,7 +115,7 @@ export const BookingModal = ({ onClose, defaultExperience = "" }: BookingModalPr
                   <textarea rows={3} className={inputClass} placeholder="Any specific requirements or questions..." value={form.message} onChange={set("message")} />
                 </div>
                 {status === "error" && <p className="text-red-500 text-sm text-center">Error: {errorMsg || "Something went wrong."}</p>}
-                <button type="submit" disabled={status === "sending"} className="w-full bg-secondary-green text-white py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-secondary-green/20 disabled:opacity-70 disabled:cursor-not-allowed">
+                <button type="submit" disabled={status === "sending"} className="w-full bg-secondary-green text-primary-navy py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-secondary-green/20 disabled:opacity-70 disabled:cursor-not-allowed">
                   {status === "sending" ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending...</> : <>Send Booking Request <ArrowRight className="w-4 h-4" /></>}
                 </button>
                 <p className="text-center text-xs text-gray-400">
