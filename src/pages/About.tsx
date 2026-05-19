@@ -185,9 +185,11 @@ export default function AboutPage() {
                 <div className="absolute -bottom-10 -right-10 w-56 h-56 bg-primary-navy/10 rounded-full blur-3xl" />
                 <div className="bg-primary-navy p-2 rounded-[40px] shadow-2xl rotate-2 relative z-10">
                   <img
-                    src={`${import.meta.env.BASE_URL}images/vrisefounder.jpeg`}
+                    src={`${import.meta.env.BASE_URL}images/vrisefounder.webp`}
                     alt="Krishen Kant Dubey — Founder, VRISE Global"
                     loading="lazy"
+                    width={584}
+                    height={939}
                     className="w-full rounded-[32px] object-contain"
                   />
                 </div>
@@ -262,7 +264,7 @@ export default function AboutPage() {
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative order-2 lg:order-1">
               <div className="absolute -bottom-8 -left-8 w-64 h-64 bg-primary-navy/5 rounded-full blur-3xl" />
               <div className="bg-secondary-green p-2 rounded-[40px] shadow-2xl rotate-2">
-                <img src={`${import.meta.env.BASE_URL}images/about-student.avif`} alt="Students experiencing VR" loading="lazy" className="w-full rounded-[32px] object-cover" />
+                <img src={`${import.meta.env.BASE_URL}images/about-student.avif`} alt="Students experiencing VR" loading="lazy" width={774} height={1161} className="w-full rounded-[32px] object-cover" />
               </div>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="order-1 lg:order-2">

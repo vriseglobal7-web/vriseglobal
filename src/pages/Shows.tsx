@@ -122,7 +122,7 @@ const shows: Show[] = [
     accentColor: "secondary-green",
     duration: "20 Minutes",
     ageGroup: "Class 4 – Class 10",
-    img: `images/show-big-bang.jpeg`,
+    img: `images/show-big-bang.webp`,
     overview: "Blast off on the most epic journey in history — from the very first moment the universe was born, all the way to humanity's greatest achievement: landing on the Moon. Students don't just learn about space; they live inside it.",
     journey: [
       "The Big Bang — witness the birth of the universe 13.8 billion years ago",
@@ -154,7 +154,7 @@ const shows: Show[] = [
     accentColor: "red-500",
     duration: "20 Minutes",
     ageGroup: "Class 4 – Class 10",
-    img: `images/show-jurassic.jpeg`,
+    img: `images/show-jurassic.webp`,
     overview: "Travel 230 million years back in time to a world where giants ruled the Earth. Students walk among dinosaurs, witness volcanic eruptions, and experience the dramatic events that shaped life on our planet — all in breathtaking 360° VR.",
     journey: [
       "The Triassic Period — birth of the first dinosaurs",
@@ -193,7 +193,7 @@ const ShowCard = ({ show, onBook }: { show: Show; onBook: (exp: string) => void 
         {/* Left — image + quick stats */}
         <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
           <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-video">
-            <img src={`${import.meta.env.BASE_URL}${show.img}`} alt={show.title} loading="lazy" className="w-full h-full object-cover" />
+            <img src={`${import.meta.env.BASE_URL}${show.img}`} alt={show.title} loading="lazy" width={1024} height={627} className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <button
               onClick={() => onBook(show.title)}
