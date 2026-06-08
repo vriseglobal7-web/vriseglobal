@@ -601,9 +601,9 @@ export default function App() {
         <Hero onBook={() => openModal()} onTrailer={() => setTrailerOpen(true)} />
         <Benefits />
         <NowShowing onBook={openModal} onLearnMore={goToShow} />
-        <About />
         <Testimonials />
         <PricingCTA onBook={() => openModal()} />
+        <About />
       </main>
       <Footer />
       <BottomBar />
