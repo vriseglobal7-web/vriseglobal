@@ -71,7 +71,7 @@ const Navbar = ({ onBook }: { onBook: () => void }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <nav className="fixed top-0 left-0 w-full z-[100] glass-nav shadow-sm">
-      <div className="w-full px-5 md:container md:mx-auto md:px-12 py-1 flex justify-between items-center">
+      <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12 py-1 flex justify-between items-center">
         <Link to="/"><VriseLogo /></Link>
         <div className="hidden md:flex items-center gap-8">
           <Link to="/" className="text-secondary-green font-bold border-b-2 border-secondary-green text-sm">Home</Link>
@@ -104,7 +104,7 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
     {/* Mobile background image */}
     <div className="absolute inset-0 lg:hidden">
       <img
-        src={`${import.meta.env.BASE_URL}images/hero-vr.webp`}
+        src={`${import.meta.env.BASE_URL}images/realimage/realheroimage.JPG`}
         alt=""
         fetchPriority="high"
         width={1536}
@@ -116,7 +116,7 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
     <div className="absolute inset-0 bg-[#001851]/60 lg:bg-transparent"></div>
     <div className="absolute inset-0 hidden lg:block bg-gradient-to-r from-[#001851] via-[#001851]/70 to-transparent"></div>
 
-    <div className="w-full px-[50px] md:container md:mx-auto md:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div className="w-full px-[50px] md:max-w-[1440px] md:mx-auto md:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
@@ -185,7 +185,7 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
       >
         <div className="absolute -inset-4 bg-secondary-green/30 blur-3xl rounded-full animate-pulse"></div>
         <img
-          src={`${import.meta.env.BASE_URL}images/hero-vr.webp`}
+          src={`${import.meta.env.BASE_URL}images/realimage/realheroimage.JPG`}
           alt="Student with VR"
           fetchPriority="high"
           width={1536}
@@ -208,7 +208,7 @@ const Benefits = () => {
 
   return (
     <section className="py-24 bg-white">
-      <div className="w-full px-[50px] md:container md:mx-auto md:px-12">
+      <div className="w-full px-[50px] md:max-w-[1440px] md:mx-auto md:px-12">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-4">Why VRISE for Your School?</h2>
           <p className="text-lg text-gray-600">Bringing the world's most advanced learning technology directly to your classroom with zero investment required from the school.</p>
@@ -255,7 +255,7 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
 
   return (
     <section className="py-24 bg-primary-navy text-white overflow-hidden">
-      <div className="w-full px-[50px] md:container md:mx-auto md:px-12">
+      <div className="w-full px-[50px] md:max-w-[1440px] md:mx-auto md:px-12">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
           <div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Now Showing</h2>
@@ -308,7 +308,7 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
 
 const About = () => (
   <section className="py-24 bg-[#fbf8ff]">
-    <div className="w-full px-[50px] md:container md:mx-auto md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <div className="w-full px-[50px] md:max-w-[1440px] md:mx-auto md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
       <div className="order-2 lg:order-1">
         <div className="relative inline-block mb-6">
           <div className="text-4xl font-bold text-primary-navy flex items-center gap-2">
@@ -352,18 +352,110 @@ const About = () => (
   </section>
 );
 
+const testimonialVideos = [
+  "livefeedback1.MP4",
+  "livefeedback2.MP4",
+  "livefeedback3.MP4",
+  "livefeedback4.MP4",
+  "livefeedback5.MP4",
+];
+
+const TestimonialCard = ({ file }: { file: string }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <div className="flex-shrink-0 w-52 md:w-auto rounded-2xl overflow-hidden shadow-lg cursor-pointer group" onClick={() => setOpen(true)}>
+        <div className="relative aspect-[9/16] bg-primary-navy">
+          <video
+            src={`${import.meta.env.BASE_URL}videos/${file}`}
+            preload="metadata"
+            playsInline
+            muted
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-16 h-16 rounded-full bg-secondary-green ring-4 ring-white/40 flex items-center justify-center shadow-[0_4px_24px_rgba(0,0,0,0.6),0_0_0_8px_rgba(145,218,64,0.2)] group-hover:scale-110 group-active:scale-95 transition-transform duration-200">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-primary-navy ml-1">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+            onClick={() => setOpen(false)}
+          >
+            <div className="absolute inset-0 bg-black/85 backdrop-blur-sm" />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative w-full max-w-sm"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setOpen(false)}
+                className="absolute -top-10 right-0 text-white/70 hover:text-white flex items-center gap-2 text-sm transition-colors"
+              >
+                <X className="w-4 h-4" /> Close
+              </button>
+              <div className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl bg-black">
+                <video
+                  src={`${import.meta.env.BASE_URL}videos/${file}`}
+                  autoPlay
+                  playsInline
+                  controls
+                  className="absolute inset-0 w-full h-full object-contain"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
+
+const Testimonials = () => (
+  <section className="py-24 bg-gray-50">
+    <div className="w-full px-[50px] md:max-w-[1440px] md:mx-auto md:px-12">
+      <div className="text-center mb-14">
+        <p className="text-secondary-green text-xs uppercase tracking-[0.3em] font-semibold mb-3">Real Reactions</p>
+        <h2 className="text-4xl md:text-5xl font-bold font-display text-primary-navy mb-4">Hear It From the Students</h2>
+        <p className="text-gray-500 max-w-xl mx-auto text-base leading-relaxed">
+          Nothing says it better than seeing the joy on their faces.
+        </p>
+      </div>
+      <div className="flex gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-5 md:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {testimonialVideos.map((file) => (
+          <TestimonialCard key={file} file={file} />
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
 const experiences = [
-  { img: "lucid-origin_create_a_image_where_Indian_school_student_wearing_uniform_using_VR._VR_on_eyes_-0.webp", label: "VR Headset Experience", tag: "Immersive", span: "col-span-2 row-span-2", w: 1024, h: 1024 },
-  { img: "54b73a77-6844-4c44-9262-0f161fae529c.webp", label: "Classroom Discovery", tag: "Interactive", span: "", w: 900, h: 720 },
-  { img: "b9f2667b-c000-44fa-b0ed-ef73be2b8157.webp", label: "Group Learning Session", tag: "Collaborative", span: "", w: 900, h: 720 },
-  { img: "premium_photo-1663054493138-0a90944f1366.avif", label: "Virtual Field Trip", tag: "Exploratory", span: "", w: 1790, h: 1161 },
-  { img: "premium_photo-1663091490635-3f757659ce10.avif", label: "360° Science Journey", tag: "Curriculum-Linked", span: "", w: 900, h: 600 },
+  { img: "images/realimage/realimage1.JPG", label: "VR Headset Experience", tag: "Immersive", span: "col-span-2 row-span-2", w: 1024, h: 1024 },
+  { img: "images/realimage/realimage2.JPG", label: "Classroom Discovery", tag: "Interactive", span: "", w: 900, h: 720 },
+  { img: "images/experiences/b9f2667b-c000-44fa-b0ed-ef73be2b8157.webp", label: "Group Learning Session", tag: "Collaborative", span: "", w: 900, h: 720 },
+  { img: "images/experiences/premium_photo-1663054493138-0a90944f1366.avif", label: "Virtual Field Trip", tag: "Exploratory", span: "", w: 1790, h: 1161 },
+  { img: "images/experiences/premium_photo-1663091490635-3f757659ce10.avif", label: "360° Science Journey", tag: "Curriculum-Linked", span: "", w: 900, h: 600 },
 ];
 
 const PricingCTA = ({ onBook }: { onBook: () => void }) => (
   <section className="py-24 bg-[#000d2e] relative overflow-hidden">
     <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "40px 40px" }}></div>
-    <div className="w-full px-[50px] md:max-w-7xl md:mx-auto md:px-12 relative z-10">
+    <div className="w-full px-[50px] md:max-w-[1440px] md:mx-auto md:px-12 relative z-10">
       {/* Heading */}
       <div className="text-center mb-14">
         <p className="text-secondary-green text-xs uppercase tracking-[0.3em] font-semibold mb-3">Step Inside the Future</p>
@@ -378,7 +470,7 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
         {/* Large feature image */}
         <div className="col-span-2 aspect-[16/7] relative rounded-2xl overflow-hidden group cursor-pointer">
           <img
-            src={`${import.meta.env.BASE_URL}images/experiences/${experiences[0].img}`}
+            src={`${import.meta.env.BASE_URL}${experiences[0].img}`}
             alt={experiences[0].label}
             loading="lazy"
             width={experiences[0].w}
@@ -396,7 +488,7 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
         {experiences.slice(1).map((exp) => (
           <div key={exp.img} className="aspect-[4/3] relative rounded-2xl overflow-hidden group cursor-pointer">
             <img
-              src={`${import.meta.env.BASE_URL}images/experiences/${exp.img}`}
+              src={`${import.meta.env.BASE_URL}${exp.img}`}
               alt={exp.label}
               loading="lazy"
               width={exp.w}
@@ -428,7 +520,7 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
 
 const Footer = () => (
   <footer className="bg-[#001851] text-white pt-24 pb-12 border-t border-white/10">
-    <div className="w-full px-[50px] md:max-w-7xl md:mx-auto md:px-12">
+    <div className="w-full px-[50px] md:max-w-[1440px] md:mx-auto md:px-12">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
         <div className="space-y-6">
           <div className="text-3xl font-bold font-display">VRISE Global</div>
@@ -469,6 +561,23 @@ const Footer = () => (
   </footer>
 );
 
+const BottomBar = () => (
+  <div className="bg-[#000d2e] py-5 overflow-hidden border-t border-white/5">
+    <div className="flex whitespace-nowrap animate-marquee">
+      {Array.from({ length: 8 }).map((_, i) => (
+        <span key={i} className="inline-flex items-center gap-4 px-10 text-white/25 text-sm font-display font-bold uppercase tracking-[0.3em]">
+          <span>VR</span>
+          <span className="text-secondary-green/40">ISE</span>
+          <span>Global</span>
+          <span className="text-secondary-green/40 text-xs">✦</span>
+          <span>Art of Imagination</span>
+          <span className="text-secondary-green/40 text-xs">✦</span>
+        </span>
+      ))}
+    </div>
+  </div>
+);
+
 export default function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [defaultExperience, setDefaultExperience] = useState("");
@@ -492,9 +601,11 @@ export default function App() {
         <Benefits />
         <NowShowing onBook={openModal} onLearnMore={goToShow} />
         <About />
+        <Testimonials />
         <PricingCTA onBook={() => openModal()} />
       </main>
       <Footer />
+      <BottomBar />
       {modalOpen && <BookingModal onClose={() => setModalOpen(false)} defaultExperience={defaultExperience} />}
       {trailerOpen && <TrailerModal onClose={() => setTrailerOpen(false)} />}
     </div>
