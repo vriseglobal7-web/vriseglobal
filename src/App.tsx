@@ -197,13 +197,33 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
   </section>
 );
 
+const StatStrip = () => (
+  <div className="bg-secondary-green py-5">
+    <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0">
+        {[
+          { value: "300+", label: "Schools" },
+          { value: "50,000+", label: "Students" },
+          { value: "2", label: "Immersive Shows" },
+          { value: "20 Min", label: "Per Session" },
+        ].map((stat, i) => (
+          <div key={i} className="flex flex-col items-center md:border-r md:last:border-r-0 border-primary-navy/15">
+            <div className="text-3xl md:text-4xl font-black text-primary-navy font-display leading-none">{stat.value}</div>
+            <div className="text-xs font-bold text-primary-navy/60 uppercase tracking-widest mt-1">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
 const Benefits = () => {
   const benefits = [
-    { icon: <Glasses size={32} />, title: "360° Immersive Experience", desc: "Feel the real world like never before with high-fidelity visuals.", bgColor: "bg-blue-500/10", iconColor: "text-blue-600" },
-    { icon: <GraduationCap size={32} />, title: "Curriculum Aligned", desc: "Content specifically designed to support classroom learning objectives.", bgColor: "bg-green-500/10", iconColor: "text-green-600" },
-    { icon: <ShieldCheck size={32} />, title: "Safe & Supervised", desc: "Fully managed by our team of trained VR professionals.", bgColor: "bg-cyan-500/10", iconColor: "text-cyan-600" },
-    { icon: <LineChart size={32} />, title: "Concept Clarity", desc: "Improves retention and understanding of complex subjects.", bgColor: "bg-red-500/10", iconColor: "text-red-500" },
-    { icon: <CreditCard size={32} />, title: "No Investment", desc: "We bring everything to you. No hardware costs for the school.", bgColor: "bg-purple-500/10", iconColor: "text-purple-600" },
+    { icon: <Glasses size={32} />, title: "360° Immersive Experience", desc: "Feel the real world like never before with high-fidelity visuals.", bgColor: "bg-secondary-green/15", iconColor: "text-secondary-green" },
+    { icon: <GraduationCap size={32} />, title: "Curriculum Aligned", desc: "Content specifically designed to support classroom learning objectives.", bgColor: "bg-tertiary-cyan/15", iconColor: "text-tertiary-cyan" },
+    { icon: <ShieldCheck size={32} />, title: "Safe & Supervised", desc: "Fully managed by our team of trained VR professionals.", bgColor: "bg-secondary-green/15", iconColor: "text-secondary-green" },
+    { icon: <LineChart size={32} />, title: "Concept Clarity", desc: "Improves retention and understanding of complex subjects.", bgColor: "bg-tertiary-cyan/15", iconColor: "text-tertiary-cyan" },
+    { icon: <CreditCard size={32} />, title: "No Investment", desc: "We bring everything to you. No hardware costs for the school.", bgColor: "bg-secondary-green/15", iconColor: "text-secondary-green" },
   ];
 
   return (
@@ -213,7 +233,7 @@ const Benefits = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-4">Why VRISE for Your School?</h2>
           <p className="text-lg text-gray-600">Bringing the world's most advanced learning technology directly to your classroom with zero investment required from the school.</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {benefits.map((benefit, i) => (
             <motion.div
               key={i}
@@ -321,14 +341,14 @@ const About = () => (
           <p>We specialize in organizing high-fidelity VR shows for schools, enabling students to "experience" subjects like science, history, and geography in a way that textbooks simply cannot match.</p>
           <p>Our mission is to inspire curiosity, encourage exploration, and build a better understanding of the world around us through the power of 360° storytelling.</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-8">
-          <div className="flex items-start gap-3">
-            <CheckCircle2 className="text-secondary-green w-6 h-6 shrink-0" />
-            <span className="text-sm font-bold text-primary-navy uppercase tracking-wider">300+ Schools Partnered</span>
+        <div className="grid grid-cols-2 gap-8 pt-8 border-t border-gray-200/60 mt-8">
+          <div>
+            <div className="text-5xl md:text-6xl font-black text-secondary-green font-display leading-none">300+</div>
+            <div className="text-xs font-bold text-primary-navy/60 uppercase tracking-widest mt-2">Schools Partnered</div>
           </div>
-          <div className="flex items-start gap-3">
-            <CheckCircle2 className="text-secondary-green w-6 h-6 shrink-0" />
-            <span className="text-sm font-bold text-primary-navy uppercase tracking-wider">50,000+ Happy Students</span>
+          <div>
+            <div className="text-5xl md:text-6xl font-black text-secondary-green font-display leading-none">50K+</div>
+            <div className="text-xs font-bold text-primary-navy/60 uppercase tracking-widest mt-2">Happy Students</div>
           </div>
         </div>
       </div>
@@ -427,12 +447,12 @@ const TestimonialCard = ({ file }: { file: string }) => {
 };
 
 const Testimonials = () => (
-  <section className="py-24 bg-gray-50">
+  <section className="py-24 bg-[#000d2e]">
     <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12">
       <div className="text-center mb-14">
         <p className="text-secondary-green text-xs uppercase tracking-[0.3em] font-semibold mb-3">Real Reactions</p>
-        <h2 className="text-4xl md:text-5xl font-bold font-display text-primary-navy mb-4">Hear It From the Students</h2>
-        <p className="text-gray-500 max-w-xl mx-auto text-base leading-relaxed">
+        <h2 className="text-4xl md:text-5xl font-bold font-display text-white mb-4">Hear It From the Students</h2>
+        <p className="text-gray-400 max-w-xl mx-auto text-base leading-relaxed">
           Nothing says it better than seeing the joy on their faces.
         </p>
       </div>
@@ -599,6 +619,7 @@ export default function App() {
       <Navbar onBook={() => openModal()} />
       <main>
         <Hero onBook={() => openModal()} onTrailer={() => setTrailerOpen(true)} />
+        <StatStrip />
         <Benefits />
         <NowShowing onBook={openModal} onLearnMore={goToShow} />
         <Testimonials />
