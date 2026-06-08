@@ -572,7 +572,7 @@ const Footer = () => (
         </div>
       </div>
       <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-sm">
-        <p>© 2024 VRISE Global. Experience Beyond Reality.</p>
+        <p>© 2026 VRISE Global. Experience Beyond Reality.</p>
         <div className="flex items-center gap-2">
           <Globe className="w-4 h-4" />
           <span>Crafted for Excellence in Education</span>
