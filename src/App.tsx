@@ -217,6 +217,38 @@ const StatStrip = () => (
   </div>
 );
 
+const schools = [
+  "Bishop Cotton School, Shimla",
+  "Army Public School, Dagshai",
+  "Auckland House School (Girls), Shimla",
+  "Auckland House School for Boys, Shimla",
+  "Sacred Heart Convent School, Shimla",
+  "K.R. Mangalam World School, Gurugram",
+  "Scottish High International School, Gurugram",
+  "CCA School, Gurugram",
+  "Raman Munjal Vidya Mandir, Gurugram",
+  "Our Lady of Fatima Convent Secondary School, Gurugram",
+  "Ambience Public School, Safdarjung Enclave",
+  "New Green Field School (NGFS), Saket",
+  "Delhi Public School (DPS), Rohini",
+  "Jagran Public School, Noida",
+  "G.D. Goenka Public School, Noida",
+  "Ramagya School, Noida",
+];
+
+const SchoolTicker = () => (
+  <div className="bg-primary-navy py-3 overflow-hidden border-t border-white/5">
+    <div className="flex whitespace-nowrap animate-marquee">
+      {[...schools, ...schools].map((school, i) => (
+        <span key={i} className="inline-flex items-center gap-3 px-6 text-sm text-white/60 font-medium">
+          <span className="text-secondary-green text-xs">✦</span>
+          {school}
+        </span>
+      ))}
+    </div>
+  </div>
+);
+
 const Benefits = () => {
   const benefits = [
     { icon: <Glasses size={32} />, title: "360° Immersive Experience", desc: "Feel the real world like never before with high-fidelity visuals.", bgColor: "bg-secondary-green/15", iconColor: "text-secondary-green" },
@@ -620,6 +652,7 @@ export default function App() {
       <main>
         <Hero onBook={() => openModal()} onTrailer={() => setTrailerOpen(true)} />
         <StatStrip />
+        <SchoolTicker />
         <Benefits />
         <NowShowing onBook={openModal} onLearnMore={goToShow} />
         <Testimonials />
