@@ -237,11 +237,11 @@ const schools = [
 ];
 
 const SchoolTicker = () => (
-  <div className="bg-primary-navy py-3 overflow-hidden border-t border-white/5">
+  <div className="bg-secondary-green py-3 overflow-hidden border-t border-primary-navy/10">
     <div className="flex whitespace-nowrap animate-marquee">
       {[...schools, ...schools].map((school, i) => (
-        <span key={i} className="inline-flex items-center gap-3 px-6 text-sm text-white/60 font-medium">
-          <span className="text-secondary-green text-xs">✦</span>
+        <span key={i} className="inline-flex items-center gap-3 px-6 text-sm text-primary-navy font-semibold">
+          <span className="text-primary-navy/40 text-xs">✦</span>
           {school}
         </span>
       ))}
