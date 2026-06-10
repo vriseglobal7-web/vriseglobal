@@ -297,6 +297,7 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
       tag: "20 MIN JOURNEY",
       desc: "An unforgettable journey through the origin of the universe to the moon landing.",
       img: `${import.meta.env.BASE_URL}images/show-big-bang.webp`,
+      imgSrcSet: `${import.meta.env.BASE_URL}images/show-big-bang-480.webp 480w, ${import.meta.env.BASE_URL}images/show-big-bang.webp 981w`,
       tagColor: "bg-secondary-green",
     },
     {
@@ -305,6 +306,7 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
       tag: "POPULAR CHOICE",
       desc: "Travel back in time to witness the majestic reign of dinosaurs and the dawn of life.",
       img: `${import.meta.env.BASE_URL}images/show-jurassic.webp`,
+      imgSrcSet: `${import.meta.env.BASE_URL}images/show-jurassic-480.webp 480w, ${import.meta.env.BASE_URL}images/show-jurassic.webp 1024w`,
       tagColor: "bg-red-500",
     },
   ];
@@ -325,7 +327,7 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
               whileHover={{ scale: 1.02 }}
               className="group relative rounded-3xl overflow-hidden aspect-video shadow-2xl"
             >
-              <img src={show.img} alt={show.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src={show.img} srcSet={show.imgSrcSet} sizes="(max-width: 768px) 100vw, 50vw" alt={show.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent"></div>
               <div className="absolute bottom-0 left-0 w-full p-4 md:p-8 space-y-2 md:space-y-4">
                 <span className={`inline-block ${show.tagColor} text-white px-3 py-1 rounded-full text-xs font-bold`}>{show.tag}</span>
@@ -498,10 +500,10 @@ const Testimonials = () => (
 
 const experiences = [
   { img: "images/realimage/realimage1.webp", label: "VR Headset Experience", tag: "Immersive", span: "col-span-2 row-span-2", w: 768, h: 1024 },
-  { img: "images/realimage/realimage2.webp", label: "Classroom Discovery", tag: "Interactive", span: "", w: 600, h: 800 },
-  { img: "images/experiences/b9f2667b-c000-44fa-b0ed-ef73be2b8157.webp", label: "Group Learning Session", tag: "Collaborative", span: "", w: 900, h: 720 },
-  { img: "images/experiences/premium_photo-1663054493138-0a90944f1366.avif", label: "Virtual Field Trip", tag: "Exploratory", span: "", w: 1790, h: 1161 },
-  { img: "images/experiences/premium_photo-1663091490635-3f757659ce10.avif", label: "360° Science Journey", tag: "Curriculum-Linked", span: "", w: 900, h: 600 },
+  { img: "images/realimage/realimage2-640.webp", label: "Classroom Discovery", tag: "Interactive", span: "", w: 600, h: 800 },
+  { img: "images/experiences/b9f2667b-640.webp", label: "Group Learning Session", tag: "Collaborative", span: "", w: 640, h: 512 },
+  { img: "images/experiences/premium1-800.webp", label: "Virtual Field Trip", tag: "Exploratory", span: "", w: 800, h: 519 },
+  { img: "images/experiences/premium2-800.webp", label: "360° Science Journey", tag: "Curriculum-Linked", span: "", w: 800, h: 533 },
 ];
 
 const PricingCTA = ({ onBook }: { onBook: () => void }) => (
@@ -523,8 +525,11 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
         <div className="col-span-2 aspect-[16/7] relative rounded-2xl overflow-hidden group cursor-pointer">
           <img
             src={`${import.meta.env.BASE_URL}${experiences[0].img}`}
+            srcSet={`${import.meta.env.BASE_URL}images/realimage/realimage1-640.webp 640w, ${import.meta.env.BASE_URL}images/realimage/realimage1.webp 768w`}
+            sizes="(max-width: 768px) 100vw, 66vw"
             alt={experiences[0].label}
             loading="lazy"
+            decoding="async"
             width={experiences[0].w}
             height={experiences[0].h}
             className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
@@ -543,6 +548,7 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
               src={`${import.meta.env.BASE_URL}${exp.img}`}
               alt={exp.label}
               loading="lazy"
+              decoding="async"
               width={exp.w}
               height={exp.h}
               className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
