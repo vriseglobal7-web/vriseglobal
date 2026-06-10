@@ -3,10 +3,7 @@ import VriseLogo from "./components/VriseLogo";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import {
-  ChevronLeft,
-  ChevronRight,
   ArrowRight,
-  CheckCircle2,
   Phone,
   Mail,
   MapPin,
@@ -45,6 +42,9 @@ const TrailerModal = ({ onClose }: { onClose: () => void }) => (
         exit={{ opacity: 0, scale: 0.95 }}
         transition={{ type: "spring", damping: 25, stiffness: 300 }}
         className="relative w-full max-w-4xl"
+        role="dialog"
+        aria-modal="true"
+        aria-label="VR Trailer"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -80,7 +80,7 @@ const Navbar = ({ onBook }: { onBook: () => void }) => {
           <Link to="/faq" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">FAQs</Link>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={onBook} className="bg-secondary-green text-primary-navy px-4 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold hover:scale-105 transition-all shadow-md">Book Now</button>
+          <button onClick={onBook} className="bg-secondary-green text-primary-navy px-4 py-3 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold hover:scale-105 transition-all shadow-md">Book Now</button>
           <button aria-label={menuOpen ? "Close menu" : "Open menu"} className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <X className="w-5 h-5 text-primary-navy" /> : <Menu className="w-5 h-5 text-primary-navy" />}
           </button>
@@ -92,7 +92,7 @@ const Navbar = ({ onBook }: { onBook: () => void }) => {
           <Link to="/about" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors" onClick={() => setMenuOpen(false)}>About Us</Link>
           <Link to="/shows" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors" onClick={() => setMenuOpen(false)}>Our Shows</Link>
           <Link to="/faq" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors" onClick={() => setMenuOpen(false)}>FAQs</Link>
-          <button onClick={() => { onBook(); setMenuOpen(false); }} className="bg-secondary-green text-primary-navy px-6 py-2 rounded-full text-sm font-bold w-full mt-2">Book Now</button>
+          <button onClick={() => { onBook(); setMenuOpen(false); }} className="bg-secondary-green text-primary-navy px-6 py-3 rounded-full text-sm font-bold w-full mt-2">Book Now</button>
         </div>
       )}
     </nav>
@@ -104,11 +104,13 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
     {/* Mobile background image */}
     <div className="absolute inset-0 lg:hidden">
       <img
-        src={`${import.meta.env.BASE_URL}images/realimage/realheroimage.JPG`}
+        src={`${import.meta.env.BASE_URL}images/realimage/realheroimage-640.webp`}
+        srcSet={`${import.meta.env.BASE_URL}images/realimage/realheroimage-640.webp 640w, ${import.meta.env.BASE_URL}images/realimage/realheroimage-1200.webp 1200w`}
+        sizes="100vw"
         alt=""
         fetchPriority="high"
-        width={1536}
-        height={1024}
+        width={640}
+        height={480}
         className="w-full h-full object-cover object-center opacity-50"
       />
     </div>
@@ -185,11 +187,13 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
       >
         <div className="absolute -inset-4 bg-secondary-green/30 blur-3xl rounded-full animate-pulse"></div>
         <img
-          src={`${import.meta.env.BASE_URL}images/realimage/realheroimage.JPG`}
+          src={`${import.meta.env.BASE_URL}images/realimage/realheroimage-1200.webp`}
+          srcSet={`${import.meta.env.BASE_URL}images/realimage/realheroimage-1200.webp 1200w, ${import.meta.env.BASE_URL}images/realimage/realheroimage-1920.webp 1920w`}
+          sizes="(max-width: 1440px) 50vw, 720px"
           alt="Student with VR"
           fetchPriority="high"
-          width={1536}
-          height={1024}
+          width={1200}
+          height={900}
           className="relative z-10 w-full rounded-3xl shadow-2xl border border-white/10 animate-float"
         />
       </motion.div>
@@ -313,14 +317,6 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Now Showing</h2>
             <p className="text-lg text-gray-400 max-w-xl">We have multiple titles and vision for setting up labs in schools to provide a smooth learning experience, Book your school's slot for these award-winning experiences.</p>
           </div>
-          <div className="flex gap-4">
-            <button aria-label="Previous show" className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-all">
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <button aria-label="Next show" className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-all">
-              <ChevronRight className="w-6 h-6" />
-            </button>
-          </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {shows.map((show, i) => (
@@ -338,13 +334,13 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
                 <div className="flex gap-3 pt-1">
                   <button
                     onClick={() => onBook(show.title)}
-                    className="bg-white text-primary-navy px-4 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold hover:bg-secondary-green hover:text-white transition-colors"
+                    className="bg-white text-primary-navy px-4 py-3 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold hover:bg-secondary-green hover:text-white transition-colors"
                   >
                     Book Now
                   </button>
                   <button
                     onClick={() => onLearnMore(show.id)}
-                    className="bg-white/10 backdrop-blur-md text-white border border-white/20 px-4 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold hover:bg-white/20 transition-colors"
+                    className="bg-white/10 backdrop-blur-md text-white border border-white/20 px-4 py-3 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold hover:bg-white/20 transition-colors"
                   >
                     Learn More
                   </button>
@@ -416,7 +412,7 @@ const TestimonialCard = ({ file }: { file: string }) => {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <div className="flex-shrink-0 w-52 md:w-auto rounded-2xl overflow-hidden shadow-lg cursor-pointer group" onClick={() => setOpen(true)}>
+      <button type="button" aria-label={`Play testimonial video ${file}`} onClick={() => setOpen(true)} className="flex-shrink-0 w-52 md:w-auto rounded-2xl overflow-hidden shadow-lg group text-left">
         <div className="relative aspect-[9/16] bg-primary-navy">
           <video
             src={`${import.meta.env.BASE_URL}videos/${file}`}
@@ -435,7 +431,7 @@ const TestimonialCard = ({ file }: { file: string }) => {
             </div>
           </div>
         </div>
-      </div>
+      </button>
 
       <AnimatePresence>
         {open && (
@@ -453,6 +449,9 @@ const TestimonialCard = ({ file }: { file: string }) => {
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               className="relative w-full max-w-sm"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Testimonial video"
               onClick={(e) => e.stopPropagation()}
             >
               <button
@@ -498,8 +497,8 @@ const Testimonials = () => (
 );
 
 const experiences = [
-  { img: "images/realimage/realimage1.JPG", label: "VR Headset Experience", tag: "Immersive", span: "col-span-2 row-span-2", w: 1024, h: 1024 },
-  { img: "images/realimage/realimage2.JPG", label: "Classroom Discovery", tag: "Interactive", span: "", w: 900, h: 720 },
+  { img: "images/realimage/realimage1.webp", label: "VR Headset Experience", tag: "Immersive", span: "col-span-2 row-span-2", w: 768, h: 1024 },
+  { img: "images/realimage/realimage2.webp", label: "Classroom Discovery", tag: "Interactive", span: "", w: 600, h: 800 },
   { img: "images/experiences/b9f2667b-c000-44fa-b0ed-ef73be2b8157.webp", label: "Group Learning Session", tag: "Collaborative", span: "", w: 900, h: 720 },
   { img: "images/experiences/premium_photo-1663054493138-0a90944f1366.avif", label: "Virtual Field Trip", tag: "Exploratory", span: "", w: 1790, h: 1161 },
   { img: "images/experiences/premium_photo-1663091490635-3f757659ce10.avif", label: "360° Science Journey", tag: "Curriculum-Linked", span: "", w: 900, h: 600 },
