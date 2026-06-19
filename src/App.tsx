@@ -433,9 +433,10 @@ const TestimonialCard = ({ file }: { file: string }) => {
         <div className="relative aspect-[9/16] bg-primary-navy">
           <video
             src={`${import.meta.env.BASE_URL}videos/${file}`}
-            preload="none"
+            preload="metadata"
             playsInline
             muted
+            onLoadedMetadata={(e) => { e.currentTarget.currentTime = 0.1; }}
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
