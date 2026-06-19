@@ -132,3 +132,5 @@ export const BookingModal = ({ onClose, defaultExperience = "" }: BookingModalPr
     </AnimatePresence>
   );
 };
+
+export default BookingModal;

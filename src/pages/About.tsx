@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+
+const BookingModal = lazy(() => import("../components/BookingModal"));
 import { motion } from "motion/react";
 import {
   Phone,
@@ -16,7 +18,6 @@ import {
   Heart,
   Users,
 } from "lucide-react";
-import { BookingModal } from "../components/BookingModal";
 
 const Footer = () => (
   <footer className="bg-[#001851] text-white pt-24 pb-12 border-t border-white/10">
@@ -280,7 +281,11 @@ export default function AboutPage() {
 
 
       <Footer />
-      {modalOpen && <BookingModal onClose={() => setModalOpen(false)} />}
+      {modalOpen && (
+        <Suspense fallback={null}>
+          <BookingModal onClose={() => setModalOpen(false)} />
+        </Suspense>
+      )}
     </div>
   );
 }

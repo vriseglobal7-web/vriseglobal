@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import type React from "react";
 import { Link, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
+
+const BookingModal = lazy(() => import("../components/BookingModal"));
 import { motion } from "motion/react";
 import {
   ArrowRight,
@@ -22,7 +24,6 @@ import {
   Zap,
   Shield,
 } from "lucide-react";
-import { BookingModal } from "../components/BookingModal";
 
 const Footer = () => (
   <footer className="bg-[#001851] text-white pt-24 pb-12 border-t border-white/10">
@@ -159,7 +160,17 @@ const ShowCard = ({ show, onBook }: { show: Show; onBook: (exp: string) => void 
         {/* Left — image + quick stats */}
         <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
           <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-video">
-            <img src={`${import.meta.env.BASE_URL}${show.img}`} alt={show.title} loading="lazy" width={1024} height={627} className="w-full h-full object-cover" />
+            <img
+              src={`${import.meta.env.BASE_URL}${show.img}`}
+              srcSet={`${import.meta.env.BASE_URL}${show.img.replace('.webp', '-480.webp')} 480w, ${import.meta.env.BASE_URL}${show.img} 1024w`}
+              sizes="(max-width: 768px) 100vw, 50vw"
+              alt={show.title}
+              loading="lazy"
+              decoding="async"
+              width={1024}
+              height={627}
+              className="w-full h-full object-cover"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <button
               onClick={() => onBook(show.title)}
@@ -332,7 +343,11 @@ export default function ShowsPage() {
       </section>
 
       <Footer />
-      {modalOpen && <BookingModal onClose={() => setModalOpen(false)} defaultExperience={defaultExperience} />}
+      {modalOpen && (
+        <Suspense fallback={null}>
+          <BookingModal onClose={() => setModalOpen(false)} defaultExperience={defaultExperience} />
+        </Suspense>
+      )}
     </div>
   );
 }

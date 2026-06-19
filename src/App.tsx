@@ -1,6 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, lazy, Suspense } from "react";
 import Navbar from "./components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
+
+const BookingModal = lazy(() => import("./components/BookingModal"));
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowRight,
@@ -23,7 +25,6 @@ import {
   Pointer,
   BookOpen,
 } from "lucide-react";
-import { BookingModal } from "./components/BookingModal";
 
 const TrailerModal = ({ onClose }: { onClose: () => void }) => (
   <AnimatePresence>
@@ -654,7 +655,11 @@ export default function App() {
       </main>
       <Footer />
       <BottomBar />
-      {modalOpen && <BookingModal onClose={() => setModalOpen(false)} defaultExperience={defaultExperience} />}
+      {modalOpen && (
+        <Suspense fallback={null}>
+          <BookingModal onClose={() => setModalOpen(false)} defaultExperience={defaultExperience} />
+        </Suspense>
+      )}
       {trailerOpen && <TrailerModal onClose={() => setTrailerOpen(false)} />}
     </div>
   );
