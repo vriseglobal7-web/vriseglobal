@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import VriseLogo from "./components/VriseLogo";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
@@ -402,6 +402,21 @@ const About = () => (
   </section>
 );
 
+const useInView = (ref: React.RefObject<HTMLElement | null>, rootMargin = "200px") => {
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setInView(true); observer.disconnect(); } },
+      { rootMargin }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [ref, rootMargin]);
+  return inView;
+};
+
 const testimonialVideos = [
   "livefeedback1.MP4",
   "livefeedback2.MP4",
@@ -418,10 +433,9 @@ const TestimonialCard = ({ file }: { file: string }) => {
         <div className="relative aspect-[9/16] bg-primary-navy">
           <video
             src={`${import.meta.env.BASE_URL}videos/${file}`}
-            preload="metadata"
+            preload="none"
             playsInline
             muted
-            onLoadedMetadata={(e) => { e.currentTarget.currentTime = 0.1; }}
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
@@ -479,24 +493,31 @@ const TestimonialCard = ({ file }: { file: string }) => {
   );
 };
 
-const Testimonials = () => (
-  <section className="py-24 bg-[#000d2e]">
-    <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12">
-      <div className="text-center mb-14">
-        <p className="text-secondary-green text-xs uppercase tracking-[0.3em] font-semibold mb-3">Real Reactions</p>
-        <h2 className="text-4xl md:text-5xl font-bold font-display text-white mb-4">Hear It From the Students</h2>
-        <p className="text-gray-400 max-w-xl mx-auto text-base leading-relaxed">
-          Nothing says it better than seeing the joy on their faces.
-        </p>
+const Testimonials = () => {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref);
+  return (
+    <section ref={ref} className="py-24 bg-[#000d2e]">
+      <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12">
+        <div className="text-center mb-14">
+          <p className="text-secondary-green text-xs uppercase tracking-[0.3em] font-semibold mb-3">Real Reactions</p>
+          <h2 className="text-4xl md:text-5xl font-bold font-display text-white mb-4">Hear It From the Students</h2>
+          <p className="text-gray-400 max-w-xl mx-auto text-base leading-relaxed">
+            Nothing says it better than seeing the joy on their faces.
+          </p>
+        </div>
+        {inView && (
+          <div className="flex gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-5 md:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {testimonialVideos.map((file) => (
+              <TestimonialCard key={file} file={file} />
+            ))}
+          </div>
+        )}
+        {!inView && <div className="h-[300px] md:h-[400px]" />}
       </div>
-      <div className="flex gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-5 md:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {testimonialVideos.map((file) => (
-          <TestimonialCard key={file} file={file} />
-        ))}
-      </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const experiences = [
   { img: "images/realimage/realimage1.webp", label: "VR Headset Experience", tag: "Immersive", span: "col-span-2 row-span-2", w: 768, h: 1024 },
