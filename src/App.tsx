@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import VriseLogo from "./components/VriseLogo";
+import Navbar from "./components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -18,7 +18,6 @@ import {
   CreditCard,
   BadgeCheck,
   X,
-  Menu,
   Play,
   Eye,
   Pointer,
@@ -66,38 +65,6 @@ const TrailerModal = ({ onClose }: { onClose: () => void }) => (
     </motion.div>
   </AnimatePresence>
 );
-
-const Navbar = ({ onBook }: { onBook: () => void }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  return (
-    <nav className="fixed top-0 left-0 w-full z-[100] glass-nav shadow-sm">
-      <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12 py-1 flex justify-between items-center">
-        <Link to="/"><VriseLogo /></Link>
-        <div className="hidden md:flex items-center gap-8">
-          <Link to="/" className="text-secondary-green font-bold border-b-2 border-secondary-green text-sm">Home</Link>
-          <Link to="/about" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">About Us</Link>
-          <Link to="/shows" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">Our Shows</Link>
-          <Link to="/faq" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">FAQs</Link>
-        </div>
-        <div className="flex items-center gap-3">
-          <button onClick={onBook} className="bg-secondary-green text-primary-navy px-4 py-3 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold hover:scale-105 transition-all shadow-md">Book Now</button>
-          <button aria-label={menuOpen ? "Close menu" : "Open menu"} className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <X className="w-5 h-5 text-primary-navy" /> : <Menu className="w-5 h-5 text-primary-navy" />}
-          </button>
-        </div>
-      </div>
-      {menuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 px-6 py-4 flex flex-col gap-4 shadow-lg">
-          <Link to="/" className="text-secondary-green font-bold text-sm" onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link to="/about" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors" onClick={() => setMenuOpen(false)}>About Us</Link>
-          <Link to="/shows" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors" onClick={() => setMenuOpen(false)}>Our Shows</Link>
-          <Link to="/faq" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors" onClick={() => setMenuOpen(false)}>FAQs</Link>
-          <button onClick={() => { onBook(); setMenuOpen(false); }} className="bg-secondary-green text-primary-navy px-6 py-3 rounded-full text-sm font-bold w-full mt-2">Book Now</button>
-        </div>
-      )}
-    </nav>
-  );
-};
 
 const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void }) => (
   <section className="relative min-h-screen flex items-center pt-20 pb-16 lg:pb-0 overflow-hidden hero-gradient">
