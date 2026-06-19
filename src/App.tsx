@@ -1,6 +1,8 @@
-import { useState } from "react";
-import VriseLogo from "./components/VriseLogo";
+import { useState, useRef, useEffect, lazy, Suspense } from "react";
+import Navbar from "./components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
+
+const BookingModal = lazy(() => import("./components/BookingModal"));
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowRight,
@@ -18,13 +20,11 @@ import {
   CreditCard,
   BadgeCheck,
   X,
-  Menu,
   Play,
   Eye,
   Pointer,
   BookOpen,
 } from "lucide-react";
-import { BookingModal } from "./components/BookingModal";
 
 const TrailerModal = ({ onClose }: { onClose: () => void }) => (
   <AnimatePresence>
@@ -66,38 +66,6 @@ const TrailerModal = ({ onClose }: { onClose: () => void }) => (
     </motion.div>
   </AnimatePresence>
 );
-
-const Navbar = ({ onBook }: { onBook: () => void }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  return (
-    <nav className="fixed top-0 left-0 w-full z-[100] glass-nav shadow-sm">
-      <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12 py-1 flex justify-between items-center">
-        <Link to="/"><VriseLogo /></Link>
-        <div className="hidden md:flex items-center gap-8">
-          <Link to="/" className="text-secondary-green font-bold border-b-2 border-secondary-green text-sm">Home</Link>
-          <Link to="/about" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">About Us</Link>
-          <Link to="/shows" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">Our Shows</Link>
-          <Link to="/faq" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">FAQs</Link>
-        </div>
-        <div className="flex items-center gap-3">
-          <button onClick={onBook} className="bg-secondary-green text-primary-navy px-4 py-3 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold hover:scale-105 transition-all shadow-md">Book Now</button>
-          <button aria-label={menuOpen ? "Close menu" : "Open menu"} className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <X className="w-5 h-5 text-primary-navy" /> : <Menu className="w-5 h-5 text-primary-navy" />}
-          </button>
-        </div>
-      </div>
-      {menuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 px-6 py-4 flex flex-col gap-4 shadow-lg">
-          <Link to="/" className="text-secondary-green font-bold text-sm" onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link to="/about" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors" onClick={() => setMenuOpen(false)}>About Us</Link>
-          <Link to="/shows" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors" onClick={() => setMenuOpen(false)}>Our Shows</Link>
-          <Link to="/faq" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors" onClick={() => setMenuOpen(false)}>FAQs</Link>
-          <button onClick={() => { onBook(); setMenuOpen(false); }} className="bg-secondary-green text-primary-navy px-6 py-3 rounded-full text-sm font-bold w-full mt-2">Book Now</button>
-        </div>
-      )}
-    </nav>
-  );
-};
 
 const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void }) => (
   <section className="relative min-h-screen flex items-center pt-20 pb-16 lg:pb-0 overflow-hidden hero-gradient">
@@ -402,6 +370,21 @@ const About = () => (
   </section>
 );
 
+const useInView = (ref: React.RefObject<HTMLElement | null>, rootMargin = "200px") => {
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setInView(true); observer.disconnect(); } },
+      { rootMargin }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [ref, rootMargin]);
+  return inView;
+};
+
 const testimonialVideos = [
   "livefeedback1.MP4",
   "livefeedback2.MP4",
@@ -479,24 +462,31 @@ const TestimonialCard = ({ file }: { file: string }) => {
   );
 };
 
-const Testimonials = () => (
-  <section className="py-24 bg-[#000d2e]">
-    <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12">
-      <div className="text-center mb-14">
-        <p className="text-secondary-green text-xs uppercase tracking-[0.3em] font-semibold mb-3">Real Reactions</p>
-        <h2 className="text-4xl md:text-5xl font-bold font-display text-white mb-4">Hear It From the Students</h2>
-        <p className="text-gray-400 max-w-xl mx-auto text-base leading-relaxed">
-          Nothing says it better than seeing the joy on their faces.
-        </p>
+const Testimonials = () => {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref);
+  return (
+    <section ref={ref} className="py-24 bg-[#000d2e]">
+      <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12">
+        <div className="text-center mb-14">
+          <p className="text-secondary-green text-xs uppercase tracking-[0.3em] font-semibold mb-3">Real Reactions</p>
+          <h2 className="text-4xl md:text-5xl font-bold font-display text-white mb-4">Hear It From the Students</h2>
+          <p className="text-gray-400 max-w-xl mx-auto text-base leading-relaxed">
+            Nothing says it better than seeing the joy on their faces.
+          </p>
+        </div>
+        {inView && (
+          <div className="flex gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-5 md:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {testimonialVideos.map((file) => (
+              <TestimonialCard key={file} file={file} />
+            ))}
+          </div>
+        )}
+        {!inView && <div className="h-[300px] md:h-[400px]" />}
       </div>
-      <div className="flex gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-5 md:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {testimonialVideos.map((file) => (
-          <TestimonialCard key={file} file={file} />
-        ))}
-      </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const experiences = [
   { img: "images/realimage/realimage1.webp", label: "VR Headset Experience", tag: "Immersive", span: "col-span-2 row-span-2", w: 768, h: 1024 },
@@ -603,6 +593,7 @@ const Footer = () => (
           <ul className="space-y-4 text-gray-400">
             <li className="flex items-center gap-3"><Phone className="text-secondary-green w-5 h-5" /> +91 98991 57132</li>
             <li className="flex items-center gap-3"><Mail className="text-secondary-green w-5 h-5" /> vriseglobal7@gmail.com</li>
+            <li className="flex items-center gap-3"><Mail className="text-secondary-green w-5 h-5" /> bhalinder@vriseglobal.co.in</li>
             <li className="flex items-center gap-3"><MapPin className="text-secondary-green w-5 h-5" /> Gurugram, Haryana, India</li>
           </ul>
         </div>
@@ -665,7 +656,11 @@ export default function App() {
       </main>
       <Footer />
       <BottomBar />
-      {modalOpen && <BookingModal onClose={() => setModalOpen(false)} defaultExperience={defaultExperience} />}
+      {modalOpen && (
+        <Suspense fallback={null}>
+          <BookingModal onClose={() => setModalOpen(false)} defaultExperience={defaultExperience} />
+        </Suspense>
+      )}
       {trailerOpen && <TrailerModal onClose={() => setTrailerOpen(false)} />}
     </div>
   );

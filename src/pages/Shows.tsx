@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import type React from "react";
 import { Link, useLocation } from "react-router-dom";
-import VriseLogo from "../components/VriseLogo";
+import Navbar from "../components/Navbar";
+
+const BookingModal = lazy(() => import("../components/BookingModal"));
 import { motion } from "motion/react";
 import {
   ArrowRight,
@@ -17,46 +19,11 @@ import {
   Users,
   BookOpen,
   Star,
-  X,
-  Menu,
   Play,
   GraduationCap,
   Zap,
   Shield,
 } from "lucide-react";
-import { BookingModal } from "../components/BookingModal";
-
-const Navbar = ({ onBook }: { onBook: () => void }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  return (
-    <nav className="fixed top-0 left-0 w-full z-[100] glass-nav shadow-sm">
-      <div className="w-full px-5 md:container md:mx-auto md:px-12 py-1 flex justify-between items-center">
-        <Link to="/"><VriseLogo /></Link>
-        <div className="hidden md:flex items-center gap-8">
-          <Link to="/" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">Home</Link>
-          <Link to="/about" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">About Us</Link>
-          <Link to="/shows" className="text-secondary-green font-bold border-b-2 border-secondary-green text-sm">Our Shows</Link>
-          <Link to="/faq" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors">FAQs</Link>
-        </div>
-        <div className="flex items-center gap-3">
-          <button onClick={onBook} className="bg-secondary-green text-primary-navy px-4 py-3 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold hover:scale-105 transition-all shadow-md">Book Now</button>
-          <button aria-label={menuOpen ? "Close menu" : "Open menu"} className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <X className="w-5 h-5 text-primary-navy" /> : <Menu className="w-5 h-5 text-primary-navy" />}
-          </button>
-        </div>
-      </div>
-      {menuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 px-6 py-4 flex flex-col gap-4 shadow-lg">
-          <Link to="/" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors" onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link to="/about" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors" onClick={() => setMenuOpen(false)}>About Us</Link>
-          <Link to="/shows" className="text-secondary-green font-bold text-sm" onClick={() => setMenuOpen(false)}>Our Shows</Link>
-          <Link to="/faq" className="text-gray-600 font-medium text-sm hover:text-secondary-green transition-colors" onClick={() => setMenuOpen(false)}>FAQs</Link>
-          <button onClick={() => { onBook(); setMenuOpen(false); }} className="bg-secondary-green text-primary-navy px-6 py-3 rounded-full text-sm font-bold w-full mt-2">Book Now</button>
-        </div>
-      )}
-    </nav>
-  );
-};
 
 const Footer = () => (
   <footer className="bg-[#001851] text-white pt-24 pb-12 border-t border-white/10">
@@ -193,7 +160,17 @@ const ShowCard = ({ show, onBook }: { show: Show; onBook: (exp: string) => void 
         {/* Left — image + quick stats */}
         <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
           <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-video">
-            <img src={`${import.meta.env.BASE_URL}${show.img}`} alt={show.title} loading="lazy" width={1024} height={627} className="w-full h-full object-cover" />
+            <img
+              src={`${import.meta.env.BASE_URL}${show.img}`}
+              srcSet={`${import.meta.env.BASE_URL}${show.img.replace('.webp', '-480.webp')} 480w, ${import.meta.env.BASE_URL}${show.img} 1024w`}
+              sizes="(max-width: 768px) 100vw, 50vw"
+              alt={show.title}
+              loading="lazy"
+              decoding="async"
+              width={1024}
+              height={627}
+              className="w-full h-full object-cover"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <button
               onClick={() => onBook(show.title)}
@@ -366,7 +343,11 @@ export default function ShowsPage() {
       </section>
 
       <Footer />
-      {modalOpen && <BookingModal onClose={() => setModalOpen(false)} defaultExperience={defaultExperience} />}
+      {modalOpen && (
+        <Suspense fallback={null}>
+          <BookingModal onClose={() => setModalOpen(false)} defaultExperience={defaultExperience} />
+        </Suspense>
+      )}
     </div>
   );
 }
