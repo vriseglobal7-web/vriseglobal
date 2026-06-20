@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect, lazy, Suspense } from "react";
 import Navbar from "./components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
-
-const BookingModal = lazy(() => import("./components/BookingModal"));
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowRight,
@@ -25,6 +23,62 @@ import {
   Pointer,
   BookOpen,
 } from "lucide-react";
+
+const BookingModal = lazy(() => import("./components/BookingModal"));
+
+// ── Shared hooks ────────────────────────────────────────────────────────────
+
+const useInView = (ref: React.RefObject<HTMLElement | null>, rootMargin = "200px") => {
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setInView(true); observer.disconnect(); } },
+      { rootMargin }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [ref, rootMargin]);
+  return inView;
+};
+
+// #2 #8 — Animated counter (ease-out cubic, respects reduced-motion)
+const useCountUp = (target: number, inView: boolean, duration = 1400) => {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setCount(target);
+      return;
+    }
+    let startTime: number | null = null;
+    const tick = (ts: number) => {
+      if (!startTime) startTime = ts;
+      const progress = Math.min((ts - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * target));
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, [inView, target, duration]);
+  return count;
+};
+
+// #4 — Reusable scroll-entrance wrapper
+const FadeUp = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 24 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+    className={className}
+  >
+    {children}
+  </motion.div>
+);
+
+// ── Trailer modal ────────────────────────────────────────────────────────────
 
 const TrailerModal = ({ onClose }: { onClose: () => void }) => (
   <AnimatePresence>
@@ -67,9 +121,10 @@ const TrailerModal = ({ onClose }: { onClose: () => void }) => (
   </AnimatePresence>
 );
 
+// ── Hero ─────────────────────────────────────────────────────────────────────
+
 const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void }) => (
   <section className="relative min-h-screen flex items-center pt-20 pb-16 lg:pb-0 overflow-hidden hero-gradient">
-    {/* Mobile background image */}
     <div className="absolute inset-0 lg:hidden">
       <img
         src={`${import.meta.env.BASE_URL}images/realimage/realheroimage-640.webp`}
@@ -82,9 +137,8 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
         className="w-full h-full object-cover object-center opacity-50"
       />
     </div>
-    {/* Overlay — dark on mobile, gradient on desktop */}
-    <div className="absolute inset-0 bg-[#001851]/60 lg:bg-transparent"></div>
-    <div className="absolute inset-0 hidden lg:block bg-gradient-to-r from-[#001851] via-[#001851]/70 to-transparent"></div>
+    <div className="absolute inset-0 bg-[#001851]/60 lg:bg-transparent" />
+    <div className="absolute inset-0 hidden lg:block bg-gradient-to-r from-[#001851] via-[#001851]/70 to-transparent" />
 
     <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       <motion.div
@@ -97,10 +151,15 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
           <BadgeCheck className="w-4 h-4" />
           <span className="text-xs font-bold tracking-widest uppercase">INDIA'S FIRST-OF-ITS-KIND</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-bold text-white leading-[1.1]">
-          360° VR Immersive <br />
-          <span className="text-secondary-green">Learning Program</span>
+
+        {/* #10 — Gradient text on headline */}
+        <h1 className="text-4xl md:text-5xl font-bold leading-[1.1]">
+          <span className="text-white">360° VR Immersive</span><br />
+          <span className="bg-gradient-to-r from-secondary-green to-tertiary-cyan bg-clip-text text-transparent">
+            Learning Program
+          </span>
         </h1>
+
         <div className="space-y-4">
           <div className="text-2xl md:text-4xl lg:text-5xl font-black tracking-wide md:tracking-wider leading-tight whitespace-nowrap">
             <span style={{ color: '#4ade80' }}>SEE.</span>{' '}
@@ -133,27 +192,40 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
             </div>
           </div>
         </div>
+
         <p className="text-lg md:text-xl text-gray-300 max-w-xl leading-relaxed">
           Learn. Experience. Remember Forever. Our program takes students on an unforgettable journey through the universe, from the Big Bang to the Moon Landing!
         </p>
+
         <div className="flex flex-wrap gap-4 pt-4">
-          <button onClick={onBook} className="bg-secondary-green text-primary-navy px-8 py-4 rounded-full text-sm font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(145,218,64,0.4)] transition-all">
-            Book Now
-            <ArrowRight className="w-4 h-4" />
+          {/* #3 — Ping pulse ring on Book Now CTA */}
+          <button
+            onClick={onBook}
+            className="relative bg-secondary-green text-primary-navy px-8 py-4 rounded-full text-sm font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(145,218,64,0.5)] transition-all"
+          >
+            <span className="absolute inset-0 rounded-full bg-secondary-green opacity-40 animate-ping" />
+            <span className="relative flex items-center gap-2">
+              Book Now
+              <ArrowRight className="w-4 h-4" />
+            </span>
           </button>
-          <button onClick={onTrailer} className="border-2 border-white/40 text-white px-8 py-4 rounded-full text-sm font-bold flex items-center gap-2 hover:bg-white/10 transition-all backdrop-blur-sm">
+          <button
+            onClick={onTrailer}
+            className="border-2 border-white/40 text-white px-8 py-4 rounded-full text-sm font-bold flex items-center gap-2 hover:bg-white/10 transition-all backdrop-blur-sm"
+          >
             <Play className="w-4 h-4 fill-white" />
             Watch Trailer
           </button>
         </div>
       </motion.div>
+
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1 }}
         className="hidden lg:block relative"
       >
-        <div className="absolute -inset-4 bg-secondary-green/30 blur-3xl rounded-full animate-pulse"></div>
+        <div className="absolute -inset-4 bg-secondary-green/30 blur-3xl rounded-full animate-pulse" />
         <img
           src={`${import.meta.env.BASE_URL}images/realimage/realheroimage-1200.webp`}
           srcSet={`${import.meta.env.BASE_URL}images/realimage/realheroimage-1200.webp 1200w, ${import.meta.env.BASE_URL}images/realimage/realheroimage-1920.webp 1920w`}
@@ -169,25 +241,44 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
   </section>
 );
 
-const StatStrip = () => (
-  <div className="bg-secondary-green py-5">
-    <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0">
-        {[
-          { value: "300+", label: "Schools" },
-          { value: "50,000+", label: "Students" },
-          { value: "2", label: "Immersive Shows" },
-          { value: "20 Min", label: "Per Session" },
-        ].map((stat, i) => (
-          <div key={i} className="flex flex-col items-center md:border-r md:last:border-r-0 border-primary-navy/15">
-            <div className="text-3xl md:text-4xl font-black text-primary-navy font-display leading-none">{stat.value}</div>
-            <div className="text-xs font-bold text-primary-navy/60 uppercase tracking-widest mt-1">{stat.label}</div>
-          </div>
-        ))}
+// ── #2 — StatStrip with animated counters ────────────────────────────────────
+
+const statData = [
+  { target: 300, display: (n: number) => `${n}+`, label: "Schools" },
+  { target: 50000, display: (n: number) => `${(n / 1000).toFixed(n >= 50000 ? 0 : 1)}K+`, label: "Students" },
+  { target: 2, display: (n: number) => `${n}`, label: "Immersive Shows" },
+  { target: 20, display: (n: number) => `${n} Min`, label: "Per Session" },
+];
+
+const StatItem = ({ target, display, label, inView }: { target: number; display: (n: number) => string; label: string; inView: boolean }) => {
+  const count = useCountUp(target, inView);
+  return (
+    <div className="flex flex-col items-center md:border-r md:last:border-r-0 border-primary-navy/15">
+      <div className="text-3xl md:text-4xl font-black text-primary-navy font-display leading-none">
+        {display(count)}
+      </div>
+      <div className="text-xs font-bold text-primary-navy/60 uppercase tracking-widest mt-1">{label}</div>
+    </div>
+  );
+};
+
+const StatStrip = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref as React.RefObject<HTMLElement>, "0px");
+  return (
+    <div ref={ref} className="bg-secondary-green py-5">
+      <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0">
+          {statData.map((s, i) => (
+            <StatItem key={i} {...s} inView={inView} />
+          ))}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
+
+// ── #7 — School ticker with edge fade ────────────────────────────────────────
 
 const schools = [
   "Bishop Cotton School, Shimla",
@@ -209,7 +300,7 @@ const schools = [
 ];
 
 const SchoolTicker = () => (
-  <div className="bg-secondary-green py-3 overflow-hidden border-t border-primary-navy/10">
+  <div className="bg-secondary-green py-3 overflow-hidden border-t border-primary-navy/10 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
     <div className="flex whitespace-nowrap animate-marquee">
       {[...schools, ...schools].map((school, i) => (
         <span key={i} className="inline-flex items-center gap-3 px-6 text-sm text-primary-navy font-semibold">
@@ -220,6 +311,18 @@ const SchoolTicker = () => (
     </div>
   </div>
 );
+
+// ── #5 — Section divider (angled) ───────────────────────────────────────────
+
+const SectionDivider = ({ fromBg, toColor }: { fromBg: string; toColor: string }) => (
+  <div className={`relative h-14 ${fromBg} overflow-hidden -mb-1`}>
+    <svg viewBox="0 0 1440 56" preserveAspectRatio="none" className="absolute bottom-0 w-full h-full">
+      <path d="M0,0 L1440,56 L1440,56 L0,56 Z" fill={toColor} />
+    </svg>
+  </div>
+);
+
+// ── #1 #4 — Benefits with heading animation + staggered cards ────────────────
 
 const Benefits = () => {
   const benefits = [
@@ -233,16 +336,23 @@ const Benefits = () => {
   return (
     <section className="py-24 bg-white">
       <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        {/* #4 — Heading entrance */}
+        <FadeUp className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-4">Why VRISE for Your School?</h2>
           <p className="text-lg text-gray-600">Bringing the world's most advanced learning technology directly to your classroom with zero investment required from the school.</p>
-        </div>
+        </FadeUp>
+
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          {/* #1 — Staggered card entrance */}
           {benefits.map((benefit, i) => (
             <motion.div
               key={i}
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -10 }}
-              className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center group hover:border-secondary-green transition-all"
+              className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center group hover:border-secondary-green hover:shadow-md transition-all"
             >
               <div className={`w-16 h-16 rounded-full ${benefit.bgColor} ${benefit.iconColor} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
                 {benefit.icon}
@@ -256,6 +366,8 @@ const Benefits = () => {
     </section>
   );
 };
+
+// ── #4 #6 #10 — NowShowing with heading + enhanced hover + gradient ───────────
 
 const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => void; onLearnMore: (id: string) => void }) => {
   const shows = [
@@ -282,21 +394,32 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
   return (
     <section className="py-24 bg-primary-navy text-white overflow-hidden">
       <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+        {/* #4 #10 — Animated heading with gradient */}
+        <FadeUp className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Now Showing</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Now{' '}
+              <span className="bg-gradient-to-r from-secondary-green to-tertiary-cyan bg-clip-text text-transparent">
+                Showing
+              </span>
+            </h2>
             <p className="text-lg text-gray-400 max-w-xl">We have multiple titles and vision for setting up labs in schools to provide a smooth learning experience, Book your school's slot for these award-winning experiences.</p>
           </div>
-        </div>
+        </FadeUp>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {shows.map((show, i) => (
             <motion.div
               key={i}
-              whileHover={{ scale: 1.02 }}
-              className="group relative rounded-3xl overflow-hidden aspect-video shadow-2xl"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ scale: 1.02, y: -6 }}
+              className="group relative rounded-3xl overflow-hidden aspect-video shadow-2xl ring-0 hover:ring-2 hover:ring-secondary-green/40 transition-shadow duration-300"
             >
               <img src={show.img} srcSet={show.imgSrcSet} sizes="(max-width: 768px) 100vw, 50vw" alt={show.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent" />
               <div className="absolute bottom-0 left-0 w-full p-4 md:p-8 space-y-2 md:space-y-4">
                 <span className={`inline-block ${show.tagColor} text-white px-3 py-1 rounded-full text-xs font-bold`}>{show.tag}</span>
                 <h3 className="text-xl md:text-3xl font-bold text-white">{show.title}</h3>
@@ -324,66 +447,87 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
   );
 };
 
-const About = () => (
-  <section className="py-24 bg-[#fbf8ff]">
-    <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-      <div className="order-2 lg:order-1">
-        <div className="relative inline-block mb-6">
-          <div className="text-4xl font-bold text-primary-navy flex items-center gap-2">
-            <span className="text-secondary-green">VR</span>ISE Global
-          </div>
-        </div>
-        <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-6">Art of Imagination</h2>
-        <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
-          <p>VRISE Global is India's leading immersive learning facilitator, dedicated to bridging the gap between traditional education and the boundless potential of Virtual Reality.</p>
-          <p>We specialize in organizing high-fidelity VR shows for schools, enabling students to "experience" subjects like science, history, and geography in a way that textbooks simply cannot match.</p>
-          <p>Our mission is to inspire curiosity, encourage exploration, and build a better understanding of the world around us through the power of 360° storytelling.</p>
-        </div>
-        <div className="grid grid-cols-2 gap-8 pt-8 border-t border-gray-200/60 mt-8">
-          <div>
-            <div className="text-5xl md:text-6xl font-black text-secondary-green font-display leading-none">300+</div>
-            <div className="text-xs font-bold text-primary-navy/60 uppercase tracking-widest mt-2">Schools Partnered</div>
-          </div>
-          <div>
-            <div className="text-5xl md:text-6xl font-black text-secondary-green font-display leading-none">50K+</div>
-            <div className="text-xs font-bold text-primary-navy/60 uppercase tracking-widest mt-2">Happy Students</div>
-          </div>
-        </div>
-      </div>
-      <div className="order-1 lg:order-2 flex justify-center">
-        <div className="relative w-4/5">
-          <div className="absolute -top-12 -left-12 w-48 h-48 bg-secondary-green/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-primary-navy/10 rounded-full blur-3xl"></div>
-          <div className="bg-primary-navy p-2 rounded-[40px] shadow-2xl rotate-3">
-            <img
-              src={`${import.meta.env.BASE_URL}images/about-student.avif`}
-              alt="Students in VR"
-              loading="lazy"
-              width={774}
-              height={1161}
-              className="w-full h-full object-cover rounded-[32px]"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-);
+// ── #4 #8 — About with scroll animations + animated stats ────────────────────
 
-const useInView = (ref: React.RefObject<HTMLElement | null>, rootMargin = "200px") => {
-  const [inView, setInView] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setInView(true); observer.disconnect(); } },
-      { rootMargin }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [ref, rootMargin]);
-  return inView;
+const About = () => {
+  const statsRef = useRef<HTMLDivElement>(null);
+  const statsInView = useInView(statsRef as React.RefObject<HTMLElement>, "0px");
+  const schools300 = useCountUp(300, statsInView);
+  const students50k = useCountUp(50000, statsInView);
+
+  return (
+    <section className="py-24 bg-[#fbf8ff]">
+      <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="order-2 lg:order-1">
+          <FadeUp>
+            <div className="relative inline-block mb-6">
+              <div className="text-4xl font-bold text-primary-navy flex items-center gap-2">
+                <span className="text-secondary-green">VR</span>ISE Global
+              </div>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-6">Art of Imagination</h2>
+            <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
+              <p>VRISE Global is India's leading immersive learning facilitator, dedicated to bridging the gap between traditional education and the boundless potential of Virtual Reality.</p>
+              <p>We specialize in organizing high-fidelity VR shows for schools, enabling students to "experience" subjects like science, history, and geography in a way that textbooks simply cannot match.</p>
+              <p>Our mission is to inspire curiosity, encourage exploration, and build a better understanding of the world around us through the power of 360° storytelling.</p>
+            </div>
+          </FadeUp>
+
+          {/* #8 — Animated stat counters */}
+          <div ref={statsRef} className="grid grid-cols-2 gap-8 pt-8 border-t border-gray-200/60 mt-8">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="text-5xl md:text-6xl font-black text-secondary-green font-display leading-none">
+                {schools300}+
+              </div>
+              <div className="text-xs font-bold text-primary-navy/60 uppercase tracking-widest mt-2">Schools Partnered</div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <div className="text-5xl md:text-6xl font-black text-secondary-green font-display leading-none">
+                {students50k >= 50000 ? "50K" : `${Math.floor(students50k / 1000)}K`}+
+              </div>
+              <div className="text-xs font-bold text-primary-navy/60 uppercase tracking-widest mt-2">Happy Students</div>
+            </motion.div>
+          </div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="order-1 lg:order-2 flex justify-center"
+        >
+          <div className="relative w-4/5">
+            <div className="absolute -top-12 -left-12 w-48 h-48 bg-secondary-green/10 rounded-full blur-3xl" />
+            <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-primary-navy/10 rounded-full blur-3xl" />
+            <div className="bg-primary-navy p-2 rounded-[40px] shadow-2xl rotate-3">
+              <img
+                src={`${import.meta.env.BASE_URL}images/about-student.avif`}
+                alt="Students in VR"
+                loading="lazy"
+                width={774}
+                height={1161}
+                className="w-full h-full object-cover rounded-[32px]"
+              />
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
 };
+
+// ── Testimonials ─────────────────────────────────────────────────────────────
 
 const testimonialVideos = [
   "livefeedback1.MP4",
@@ -468,13 +612,14 @@ const Testimonials = () => {
   return (
     <section ref={ref} className="py-24 bg-[#000d2e]">
       <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12">
-        <div className="text-center mb-14">
+        {/* #4 — Heading animation */}
+        <FadeUp className="text-center mb-14">
           <p className="text-secondary-green text-xs uppercase tracking-[0.3em] font-semibold mb-3">Real Reactions</p>
           <h2 className="text-4xl md:text-5xl font-bold font-display text-white mb-4">Hear It From the Students</h2>
           <p className="text-gray-400 max-w-xl mx-auto text-base leading-relaxed">
             Nothing says it better than seeing the joy on their faces.
           </p>
-        </div>
+        </FadeUp>
         {inView && (
           <div className="flex gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-5 md:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {testimonialVideos.map((file) => (
@@ -488,26 +633,34 @@ const Testimonials = () => {
   );
 };
 
+// ── #4 #9 — PricingCTA with heading + label slide-up ─────────────────────────
+
 const experiences = [
-  { img: "images/realimage/realimage1.webp", label: "VR Headset Experience", tag: "Immersive", span: "col-span-2 row-span-2", w: 768, h: 1024 },
-  { img: "images/realimage/realimage2-640.webp", label: "Classroom Discovery", tag: "Interactive", span: "", w: 600, h: 800 },
-  { img: "images/experiences/b9f2667b-640.webp", label: "Group Learning Session", tag: "Collaborative", span: "", w: 640, h: 512 },
-  { img: "images/experiences/premium1-800.webp", label: "Virtual Field Trip", tag: "Exploratory", span: "", w: 800, h: 519 },
-  { img: "images/experiences/premium2-800.webp", label: "360° Science Journey", tag: "Curriculum-Linked", span: "", w: 800, h: 533 },
+  { img: "images/realimage/realimage1.webp", label: "VR Headset Experience", tag: "Immersive", w: 768, h: 1024 },
+  { img: "images/realimage/realimage2-640.webp", label: "Classroom Discovery", tag: "Interactive", w: 600, h: 800 },
+  { img: "images/experiences/b9f2667b-640.webp", label: "Group Learning Session", tag: "Collaborative", w: 640, h: 512 },
+  { img: "images/experiences/premium1-800.webp", label: "Virtual Field Trip", tag: "Exploratory", w: 800, h: 519 },
+  { img: "images/experiences/premium2-800.webp", label: "360° Science Journey", tag: "Curriculum-Linked", w: 800, h: 533 },
 ];
 
 const PricingCTA = ({ onBook }: { onBook: () => void }) => (
-  <section className="py-24 bg-[#000d2e] relative overflow-hidden">
-    <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "40px 40px" }}></div>
+  <section className="py-24 bg-[#000824] relative overflow-hidden">
+    <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "40px 40px" }} />
     <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12 relative z-10">
-      {/* Heading */}
-      <div className="text-center mb-14">
+
+      {/* #4 — Heading animation */}
+      <FadeUp className="text-center mb-14">
         <p className="text-secondary-green text-xs uppercase tracking-[0.3em] font-semibold mb-3">Step Inside the Future</p>
-        <h2 className="text-4xl md:text-5xl font-bold font-display text-white mb-4">Experiences That Stay With You</h2>
+        <h2 className="text-4xl md:text-5xl font-bold font-display text-white mb-4">
+          Experiences That{' '}
+          <span className="bg-gradient-to-r from-secondary-green to-tertiary-cyan bg-clip-text text-transparent">
+            Stay With You
+          </span>
+        </h2>
         <p className="text-gray-400 max-w-xl mx-auto text-base leading-relaxed">
           From the Big Bang to the Jurassic Era — every session is a world your students will never forget.
         </p>
-      </div>
+      </FadeUp>
 
       {/* Image Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-14">
@@ -524,8 +677,9 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
             height={experiences[0].h}
             className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
-          <div className="absolute bottom-5 left-5">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+          {/* #9 — Label slide-up on hover */}
+          <div className="absolute bottom-5 left-5 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
             <span className="text-xs text-secondary-green font-semibold uppercase tracking-widest bg-secondary-green/10 border border-secondary-green/30 px-3 py-1 rounded-full">{experiences[0].tag}</span>
             <p className="text-white font-bold text-xl mt-2">{experiences[0].label}</p>
           </div>
@@ -543,8 +697,9 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
               height={exp.h}
               className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
-            <div className="absolute bottom-3 left-3">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+            {/* #9 — Label slide-up on hover */}
+            <div className="absolute bottom-3 left-3 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
               <span className="text-[10px] text-secondary-green font-semibold uppercase tracking-widest bg-secondary-green/10 border border-secondary-green/30 px-2 py-0.5 rounded-full">{exp.tag}</span>
               <p className="text-white font-semibold text-sm mt-1 leading-tight">{exp.label}</p>
             </div>
@@ -565,6 +720,8 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
     </div>
   </section>
 );
+
+// ── Footer ───────────────────────────────────────────────────────────────────
 
 const Footer = () => (
   <footer className="bg-[#001851] text-white pt-24 pb-12 border-t border-white/10">
@@ -626,6 +783,8 @@ const BottomBar = () => (
   </div>
 );
 
+// ── App ───────────────────────────────────────────────────────────────────────
+
 export default function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [defaultExperience, setDefaultExperience] = useState("");
@@ -649,9 +808,13 @@ export default function App() {
         <StatStrip />
         <SchoolTicker />
         <Benefits />
+        {/* #5 — Angled divider: white Benefits → navy NowShowing */}
+        <SectionDivider fromBg="bg-white" toColor="#001851" />
         <NowShowing onBook={openModal} onLearnMore={goToShow} />
         <Testimonials />
         <PricingCTA onBook={() => openModal()} />
+        {/* #5 — Divider: dark PricingCTA → light About */}
+        <SectionDivider fromBg="bg-[#000824]" toColor="#fbf8ff" />
         <About />
       </main>
       <Footer />
