@@ -141,9 +141,9 @@ export const BookingModal = ({ onClose, defaultExperience = "" }: BookingModalPr
             <button
               onClick={onClose}
               aria-label="Close booking modal"
-              className="absolute top-4 right-4 z-50 w-9 h-9 rounded-full bg-gray-100 sm:bg-white/10 flex items-center justify-center hover:bg-gray-200 sm:hover:bg-white/20 transition-colors"
+              className="absolute top-4 right-4 z-50 w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 sm:bg-gray-100 sm:hover:bg-gray-200 flex items-center justify-center transition-colors"
             >
-              <X className="w-4 h-4 text-gray-700 sm:text-white" />
+              <X className="w-4 h-4 text-white sm:text-gray-700" />
             </button>
 
             <div className="flex-1 overflow-y-auto p-6 sm:p-8">
