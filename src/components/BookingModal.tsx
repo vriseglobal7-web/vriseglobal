@@ -125,6 +125,10 @@ export const BookingModal = ({ onClose, defaultExperience = "" }: BookingModalPr
                 <Mail className="w-4 h-4 text-secondary-green" />
                 vriseglobal7@gmail.com
               </a>
+              <a href="mailto:bhalinder@vriseglobal.co.in" className="flex items-center gap-2 text-sm text-white hover:text-secondary-green transition-colors mt-2">
+                <Mail className="w-4 h-4 text-secondary-green" />
+                bhalinder@vriseglobal.co.in
+              </a>
             </div>
           </div>
 
