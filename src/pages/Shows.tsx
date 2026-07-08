@@ -48,7 +48,7 @@ const Footer = () => (
           </ul>
         </div>
         <div>
-          <h3 className="text-lg font-bold mb-6">Contact Detail</h3>
+          <h3 className="text-lg font-bold mb-6">Contact Details</h3>
           <ul className="space-y-4 text-gray-400">
             <li className="flex items-center gap-3"><Phone className="text-secondary-green w-5 h-5" /> +91 98991 57132</li>
             <li className="flex items-center gap-3"><Mail className="text-secondary-green w-5 h-5" /> vriseglobal7@gmail.com</li>
@@ -58,7 +58,7 @@ const Footer = () => (
         </div>
       </div>
       <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-sm">
-        <p>© 2024 VRISE Global. Experience Beyond Reality.</p>
+        <p>© 2026 VRISE Global. Experience Beyond Reality.</p>
         <div className="flex items-center gap-2"><Globe className="w-4 h-4" /><span>Crafted for Excellence in Education</span></div>
       </div>
     </div>
@@ -153,7 +153,7 @@ const ShowCard = ({ show, onBook }: { show: Show; onBook: (exp: string) => void 
       {/* Title */}
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
         <span className={`inline-block ${show.tagColor} text-white px-4 py-1 rounded-full text-xs font-bold mb-4`}>{show.tag}</span>
-        <h2 className="text-4xl md:text-5xl font-bold text-primary-navy">{show.title}</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-primary-navy">{show.title}</h2>
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -327,7 +327,7 @@ export default function ShowsPage() {
           <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "40px 40px" }} />
         </div>
         <div className="w-full px-[50px] md:container md:mx-auto md:px-12 relative z-10 text-center text-white">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Can't Choose? Book Both!</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Can't Choose? Book Both!</h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-10">
             Many schools book both experiences for a full immersive learning day. Students get to travel through space and time — all in one visit.
           </p>

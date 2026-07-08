@@ -42,7 +42,7 @@ const Footer = () => (
           </ul>
         </div>
         <div>
-          <h3 className="text-lg font-bold mb-6">Contact Detail</h3>
+          <h3 className="text-lg font-bold mb-6">Contact Details</h3>
           <ul className="space-y-4 text-gray-400">
             <li className="flex items-center gap-3"><Phone className="text-secondary-green w-5 h-5" /> +91 98991 57132</li>
             <li className="flex items-center gap-3"><Mail className="text-secondary-green w-5 h-5" /> vriseglobal7@gmail.com</li>
@@ -52,7 +52,7 @@ const Footer = () => (
         </div>
       </div>
       <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-sm">
-        <p>© 2024 VRISE Global. Experience Beyond Reality.</p>
+        <p>© 2026 VRISE Global. Experience Beyond Reality.</p>
         <div className="flex items-center gap-2"><Globe className="w-4 h-4" /><span>Crafted for Excellence in Education</span></div>
       </div>
     </div>
@@ -118,7 +118,7 @@ export default function AboutPage() {
       <section className="py-24 bg-white">
         <div className="w-full px-[50px] md:container md:mx-auto md:px-12 max-w-5xl">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-8">Our Story</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-navy mb-8">Our Story</h2>
             <div className="space-y-5 text-gray-600 text-lg leading-relaxed">
               <p>
                 VRISE Global was born from a simple, powerful observation: classrooms across India were filled with curious minds being taught about the Big Bang, dinosaurs, and ancient civilizations — but only through textbooks and static images.
@@ -141,8 +141,8 @@ export default function AboutPage() {
       <section className="py-24 bg-[#fbf8ff]">
         <div className="w-full px-[50px] md:container md:mx-auto md:px-12">
           <div className="text-center mb-16">
-            <p className="text-secondary-green text-xs uppercase tracking-[0.3em] font-semibold mb-3">The Visionary</p>
-            <h2 className="text-4xl md:text-5xl font-bold text-primary-navy">Meet the Founder</h2>
+            <p className="text-secondary-green-dark text-xs uppercase tracking-[0.3em] font-semibold mb-3">The Visionary</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-navy">Meet the Founder</h2>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Photo */}
@@ -175,7 +175,7 @@ export default function AboutPage() {
             {/* Content */}
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <h3 className="text-3xl md:text-4xl font-bold text-primary-navy mb-2">Krishen Kant Dubey</h3>
-              <p className="text-secondary-green font-semibold text-sm uppercase tracking-widest mb-6">Founder & Director, VRISE Global</p>
+              <p className="text-secondary-green-dark font-semibold text-sm uppercase tracking-widest mb-6">Founder & Director, VRISE Global</p>
               <div className="space-y-5 text-gray-600 text-base leading-relaxed">
                 <p>
                   Krishen Kant Dubey didn't build VRISE Global from a boardroom — he built it from classrooms. With over <span className="font-bold text-primary-navy">9 years spent working directly within schools</span>, he experienced first-hand the hunger students have for learning that goes beyond the page.
@@ -195,7 +195,7 @@ export default function AboutPage() {
                   { label: "VR Experiences", value: "2 & Growing" },
                 ].map((stat) => (
                   <div key={stat.label} className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm">
-                    <p className="text-2xl font-bold text-secondary-green">{stat.value}</p>
+                    <p className="text-2xl font-bold text-secondary-green-dark">{stat.value}</p>
                     <p className="text-xs text-gray-500 uppercase tracking-wider mt-1">{stat.label}</p>
                   </div>
                 ))}
@@ -209,7 +209,7 @@ export default function AboutPage() {
       <section className="py-24 bg-white">
         <div className="w-full px-[50px] md:container md:mx-auto md:px-12">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-4">What Drives Us</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-navy mb-4">What Drives Us</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">Every VR session we deliver is guided by a clear purpose — to make learning transformative, accessible, and memorable.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -235,7 +235,7 @@ export default function AboutPage() {
               </div>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="order-1 lg:order-2">
-              <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-8">How It Works</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-primary-navy mb-8">How It Works</h2>
               <div className="space-y-6">
                 {[
                   { step: "01", title: "Book a Session", desc: "Fill out our simple booking form. Our team contacts you within 24 hours to confirm the date, time, and number of students." },
@@ -261,7 +261,7 @@ export default function AboutPage() {
       <section className="py-24 bg-primary-navy text-white">
         <div className="w-full px-[50px] md:container md:mx-auto md:px-12">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">The People Behind VRISE</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">The People Behind VRISE</h2>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto">A passionate team of educators, technologists, and storytellers united by one goal — making learning unforgettable.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

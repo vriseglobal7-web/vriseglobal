@@ -161,7 +161,7 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
         </h1>
 
         <div className="space-y-4">
-          <div className="text-2xl md:text-4xl lg:text-5xl font-black tracking-wide md:tracking-wider leading-tight whitespace-nowrap">
+          <div className="text-2xl md:text-3xl lg:text-4xl font-black tracking-wide md:tracking-wider leading-tight whitespace-nowrap">
             <span style={{ color: '#4ade80' }}>SEE.</span>{' '}
             <span style={{ color: '#60a5fa' }}>FEEL.</span>{' '}
             <span style={{ color: '#a78bfa' }}>LEARN.</span>
@@ -194,7 +194,7 @@ const Hero = ({ onBook, onTrailer }: { onBook: () => void; onTrailer: () => void
         </div>
 
         <p className="text-lg md:text-xl text-gray-300 max-w-xl leading-relaxed">
-          Learn. Experience. Remember Forever. Our program takes students on an unforgettable journey through the universe, from the Big Bang to the Moon Landing!
+          Learn. Experience. Remember forever. Our program takes students on an unforgettable journey through the universe — from the Big Bang to the Moon Landing.
         </p>
 
         <div className="flex flex-wrap gap-4 pt-4">
@@ -257,7 +257,7 @@ const StatItem = ({ target, display, label, inView }: { target: number; display:
       <div className="text-3xl md:text-4xl font-black text-primary-navy font-display leading-none">
         {display(count)}
       </div>
-      <div className="text-xs font-bold text-primary-navy/60 uppercase tracking-widest mt-1">{label}</div>
+      <div className="text-xs font-bold text-primary-navy/80 uppercase tracking-widest mt-1">{label}</div>
     </div>
   );
 };
@@ -338,7 +338,7 @@ const Benefits = () => {
       <div className="w-full px-5 md:max-w-[1440px] md:mx-auto md:px-12">
         {/* #4 — Heading entrance */}
         <FadeUp className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-4">Why VRISE for Your School?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary-navy mb-4">Why VRISE for Your School?</h2>
           <p className="text-lg text-gray-600">Bringing the world's most advanced learning technology directly to your classroom with zero investment required from the school.</p>
         </FadeUp>
 
@@ -397,13 +397,13 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
         {/* #4 #10 — Animated heading with gradient */}
         <FadeUp className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Now{' '}
               <span className="bg-gradient-to-r from-secondary-green to-tertiary-cyan bg-clip-text text-transparent">
                 Showing
               </span>
             </h2>
-            <p className="text-lg text-gray-400 max-w-xl">We have multiple titles and vision for setting up labs in schools to provide a smooth learning experience, Book your school's slot for these award-winning experiences.</p>
+            <p className="text-lg text-gray-400 max-w-xl">Two immersive titles, with more on the way — and a vision to set up permanent VR labs in schools. Book your school's slot today.</p>
           </div>
         </FadeUp>
 
@@ -462,10 +462,10 @@ const About = () => {
           <FadeUp>
             <div className="relative inline-block mb-6">
               <div className="text-4xl font-bold text-primary-navy flex items-center gap-2">
-                <span className="text-secondary-green">VR</span>ISE Global
+                <span className="text-secondary-green-dark">VR</span>ISE Global
               </div>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-6">Art of Imagination</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-navy mb-6">Art of Imagination</h2>
             <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
               <p>VRISE Global is India's leading immersive learning facilitator, dedicated to bridging the gap between traditional education and the boundless potential of Virtual Reality.</p>
               <p>We specialize in organizing high-fidelity VR shows for schools, enabling students to "experience" subjects like science, history, and geography in a way that textbooks simply cannot match.</p>
@@ -481,10 +481,10 @@ const About = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <div className="text-5xl md:text-6xl font-black text-secondary-green font-display leading-none">
+              <div className="text-5xl md:text-6xl font-black text-secondary-green-dark font-display leading-none">
                 {schools300}+
               </div>
-              <div className="text-xs font-bold text-primary-navy/60 uppercase tracking-widest mt-2">Schools Partnered</div>
+              <div className="text-xs font-bold text-primary-navy/80 uppercase tracking-widest mt-2">Schools Partnered</div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -492,10 +492,10 @@ const About = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <div className="text-5xl md:text-6xl font-black text-secondary-green font-display leading-none">
+              <div className="text-5xl md:text-6xl font-black text-secondary-green-dark font-display leading-none">
                 {students50k >= 50000 ? "50K" : `${Math.floor(students50k / 1000)}K`}+
               </div>
-              <div className="text-xs font-bold text-primary-navy/60 uppercase tracking-widest mt-2">Happy Students</div>
+              <div className="text-xs font-bold text-primary-navy/80 uppercase tracking-widest mt-2">Happy Students</div>
             </motion.div>
           </div>
         </div>
@@ -618,7 +618,7 @@ const Testimonials = () => {
         {/* #4 — Heading animation */}
         <FadeUp className="text-center mb-14">
           <p className="text-secondary-green text-xs uppercase tracking-[0.3em] font-semibold mb-3">Real Reactions</p>
-          <h2 className="text-4xl md:text-5xl font-bold font-display text-white mb-4">Hear It From the Students</h2>
+          <h2 className="text-3xl md:text-4xl font-bold font-display text-white mb-4">Hear It From the Students</h2>
           <p className="text-gray-400 max-w-xl mx-auto text-base leading-relaxed">
             Nothing says it better than seeing the joy on their faces.
           </p>
@@ -654,7 +654,7 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
       {/* #4 — Heading animation */}
       <FadeUp className="text-center mb-14">
         <p className="text-secondary-green text-xs uppercase tracking-[0.3em] font-semibold mb-3">Step Inside the Future</p>
-        <h2 className="text-4xl md:text-5xl font-bold font-display text-white mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold font-display text-white mb-4">
           Experiences That{' '}
           <span className="bg-gradient-to-r from-secondary-green to-tertiary-cyan bg-clip-text text-transparent">
             Stay With You
@@ -717,7 +717,7 @@ const PricingCTA = ({ onBook }: { onBook: () => void }) => (
           onClick={onBook}
           className="bg-secondary-green text-primary-navy px-12 py-5 rounded-full text-sm font-bold hover:scale-105 active:scale-95 transition-all shadow-[0_0_40px_rgba(145,218,64,0.35)] tracking-widest"
         >
-          ENQUIRE NOW FOR BOOKING
+          ENQUIRE NOW
         </button>
       </div>
     </div>
@@ -749,7 +749,7 @@ const Footer = () => (
           </ul>
         </div>
         <div>
-          <h3 className="text-lg font-bold mb-6">Contact Detail</h3>
+          <h3 className="text-lg font-bold mb-6">Contact Details</h3>
           <ul className="space-y-4 text-gray-400">
             <li className="flex items-center gap-3"><Phone className="text-secondary-green w-5 h-5" /> +91 98991 57132</li>
             <li className="flex items-center gap-3"><Mail className="text-secondary-green w-5 h-5" /> vriseglobal7@gmail.com</li>

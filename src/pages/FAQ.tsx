@@ -132,7 +132,7 @@ const BookingModal = ({ onClose }: BookingModalProps) => {
                 {status === "sending" ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending...</> : <>Send Booking Request <ArrowRight className="w-4 h-4" /></>}
               </button>
               <p className="text-center text-xs text-gray-400">
-                Or call us directly at <a href="tel:+919899157132" className="text-secondary-green font-bold">+91 98991 57132</a>
+                Or call us directly at <a href="tel:+919899157132" className="text-secondary-green-dark font-bold">+91 98991 57132</a>
               </p>
             </form>
           )}
@@ -165,7 +165,7 @@ const Footer = () => (
           </ul>
         </div>
         <div>
-          <h3 className="text-lg font-bold mb-6">Contact Detail</h3>
+          <h3 className="text-lg font-bold mb-6">Contact Details</h3>
           <ul className="space-y-4 text-gray-400">
             <li className="flex items-center gap-3"><Phone className="text-secondary-green w-5 h-5" /> +91 98991 57132</li>
             <li className="flex items-center gap-3"><Mail className="text-secondary-green w-5 h-5" /> vriseglobal7@gmail.com</li>
@@ -175,7 +175,7 @@ const Footer = () => (
         </div>
       </div>
       <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-sm">
-        <p>© 2024 VRISE Global. Experience Beyond Reality.</p>
+        <p>© 2026 VRISE Global. Experience Beyond Reality.</p>
         <div className="flex items-center gap-2"><Globe className="w-4 h-4" /><span>Crafted for Excellence in Education</span></div>
       </div>
     </div>
