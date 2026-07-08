@@ -395,16 +395,18 @@ const testimonialVideos = [
 
 const TestimonialCard = ({ file }: { file: string }) => {
   const [open, setOpen] = useState(false);
+  const poster = `${import.meta.env.BASE_URL}images/testimonials/${file.replace(".MP4", ".webp")}`;
   return (
     <>
       <button type="button" aria-label={`Play testimonial video ${file}`} onClick={() => setOpen(true)} className="flex-shrink-0 w-52 md:w-auto rounded-2xl overflow-hidden shadow-lg group text-left">
         <div className="relative aspect-[9/16] bg-primary-navy">
-          <video
-            src={`${import.meta.env.BASE_URL}videos/${file}`}
-            preload="metadata"
-            playsInline
-            muted
-            onLoadedMetadata={(e) => { e.currentTarget.currentTime = 0.1; }}
+          <img
+            src={poster}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            width={480}
+            height={854}
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
@@ -448,6 +450,7 @@ const TestimonialCard = ({ file }: { file: string }) => {
               <div className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl bg-black">
                 <video
                   src={`${import.meta.env.BASE_URL}videos/${file}`}
+                  poster={poster}
                   autoPlay
                   playsInline
                   controls
@@ -613,13 +616,11 @@ const BottomBar = () => (
   <div className="bg-[#000d2e] py-5 overflow-hidden border-t border-white/5">
     <div className="flex whitespace-nowrap animate-marquee">
       {Array.from({ length: 8 }).map((_, i) => (
-        <span key={i} className="inline-flex items-center gap-4 px-10 text-white/25 text-sm font-display font-bold uppercase tracking-[0.3em]">
-          <span>VR</span>
-          <span className="text-secondary-green/40">ISE</span>
-          <span>Global</span>
-          <span className="text-secondary-green/40 text-xs">✦</span>
+        <span key={i} className="inline-flex items-center gap-4 px-10 text-white/70 text-sm font-display font-bold uppercase tracking-[0.3em]">
+          <span><span className="text-secondary-green/80">VR</span>ISE Global</span>
+          <span className="text-secondary-green/80 text-xs">✦</span>
           <span>Art of Imagination</span>
-          <span className="text-secondary-green/40 text-xs">✦</span>
+          <span className="text-secondary-green/80 text-xs">✦</span>
         </span>
       ))}
     </div>
