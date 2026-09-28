@@ -375,6 +375,7 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
       id: "big-bang",
       title: "Big Bang Theory",
       tag: "20 MIN JOURNEY",
+      price: "₹350 – ₹500",
       desc: "An unforgettable journey through the origin of the universe to the moon landing.",
       img: `${import.meta.env.BASE_URL}images/show-big-bang.webp`,
       imgSrcSet: `${import.meta.env.BASE_URL}images/show-big-bang-480.webp 480w, ${import.meta.env.BASE_URL}images/show-big-bang.webp 981w`,
@@ -384,6 +385,7 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
       id: "jurassic",
       title: "Jurassic Era & Beyond",
       tag: "POPULAR CHOICE",
+      price: "₹350 – ₹500",
       desc: "Travel back in time to witness the majestic reign of dinosaurs and the dawn of life.",
       img: `${import.meta.env.BASE_URL}images/show-jurassic.webp`,
       imgSrcSet: `${import.meta.env.BASE_URL}images/show-jurassic-480.webp 480w, ${import.meta.env.BASE_URL}images/show-jurassic.webp 1024w`,
@@ -424,6 +426,9 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
                 <span className={`inline-block ${show.tagColor} text-white px-3 py-1 rounded-full text-xs font-bold`}>{show.tag}</span>
                 <h3 className="text-xl md:text-3xl font-bold text-white">{show.title}</h3>
                 <p className="text-gray-300 max-w-md text-sm md:text-base hidden sm:block">{show.desc}</p>
+                <p className="text-secondary-green font-bold text-lg md:text-2xl">
+                  {show.price} <span className="text-sm md:text-base font-medium text-gray-300">per student</span>
+                </p>
                 <div className="flex gap-3 pt-1">
                   <button
                     onClick={() => onBook(show.title)}

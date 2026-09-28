@@ -23,6 +23,7 @@ import {
   GraduationCap,
   Zap,
   Shield,
+  IndianRupee,
 } from "lucide-react";
 
 const Footer = () => (
@@ -73,6 +74,7 @@ type Show = {
   accentColor: string;
   duration: string;
   ageGroup: string;
+  price: string;
   img: string;
   overview: string;
   journey: string[];
@@ -89,6 +91,7 @@ const shows: Show[] = [
     accentColor: "secondary-green",
     duration: "20 Minutes",
     ageGroup: "Class 4 – Class 10",
+    price: "₹350 – ₹500",
     img: `images/show-big-bang.webp`,
     overview: "Blast off on the most epic journey in history — from the very first moment the universe was born, all the way to humanity's greatest achievement: landing on the Moon. Students don't just learn about space; they live inside it.",
     journey: [
@@ -121,6 +124,7 @@ const shows: Show[] = [
     accentColor: "red-500",
     duration: "20 Minutes",
     ageGroup: "Class 4 – Class 10",
+    price: "₹350 – ₹500",
     img: `images/show-jurassic.webp`,
     overview: "Travel 230 million years back in time to a world where giants ruled the Earth. Students walk among dinosaurs, witness volcanic eruptions, and experience the dramatic events that shaped life on our planet — all in breathtaking 360° VR.",
     journey: [
@@ -194,6 +198,15 @@ const ShowCard = ({ show, onBook }: { show: Show; onBook: (exp: string) => void 
               <div>
                 <div className="text-xs text-gray-500 uppercase tracking-wider font-bold">Age Group</div>
                 <div className="text-primary-navy font-bold">{show.ageGroup}</div>
+              </div>
+            </div>
+            <div className="col-span-2 bg-secondary-green/10 border border-secondary-green/30 rounded-2xl p-5 flex items-center gap-4">
+              <IndianRupee className="w-8 h-8 text-secondary-green shrink-0" />
+              <div>
+                <div className="text-xs text-gray-500 uppercase tracking-wider font-bold">Pricing</div>
+                <div className="text-primary-navy font-bold text-lg">
+                  {show.price} <span className="text-sm font-medium text-gray-500">per student</span>
+                </div>
               </div>
             </div>
           </div>
