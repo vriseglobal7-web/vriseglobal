@@ -423,12 +423,12 @@ const NowShowing = ({ onBook, onLearnMore }: { onBook: (experience: string) => v
               <img src={show.img} srcSet={show.imgSrcSet} sizes="(max-width: 768px) 100vw, 50vw" alt={show.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent" />
               <div className="absolute bottom-0 left-0 w-full p-4 md:p-8 space-y-2 md:space-y-4">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className={`inline-block ${show.tagColor} text-white px-3 py-1 rounded-full text-xs font-bold`}>{show.tag}</span>
-                  <span className="inline-block bg-white/15 backdrop-blur-md border border-white/20 text-white px-3 py-1 rounded-full text-xs font-bold">{show.price} / student</span>
-                </div>
+                <span className={`inline-block ${show.tagColor} text-white px-3 py-1 rounded-full text-xs font-bold`}>{show.tag}</span>
                 <h3 className="text-xl md:text-3xl font-bold text-white">{show.title}</h3>
                 <p className="text-gray-300 max-w-md text-sm md:text-base hidden sm:block">{show.desc}</p>
+                <p className="text-secondary-green font-bold text-lg md:text-2xl">
+                  {show.price} <span className="text-sm md:text-base font-medium text-gray-300">per student</span>
+                </p>
                 <div className="flex gap-3 pt-1">
                   <button
                     onClick={() => onBook(show.title)}
